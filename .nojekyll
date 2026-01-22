@@ -1,0 +1,2 @@
+# 告诉 GitHub Pages 不要使用 Jekyll 处理
+# 这样可以避免 Jekyll 对文件路径的特殊处理

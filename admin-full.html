@@ -1,0 +1,2435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>雪顶山矿泉 - 完整内容管理系统</title>
+    <link rel="icon" type="image/x-icon" href="./images/logo.jpg">
+    <style>
+        /* 登录界面样式 */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0077b6, #00b4d8);
+            padding: 2rem;
+        }
+        
+        .login-box {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .login-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            background: #f8f9fa;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #e9ecef;
+            overflow: hidden;
+        }
+        
+        .login-logo .logo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        .login-title {
+            color: #0077b6;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .login-subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        
+        .login-form {
+            text-align: left;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #0077b6;
+            box-shadow: 0 0 0 2px rgba(0, 119, 182, 0.1);
+        }
+        
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #0077b6, #00b4d8);
+            color: white;
+            border: none;
+            padding: 0.9rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 119, 182, 0.3);
+        }
+        
+        .error-message {
+            color: #f44336;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        /* 隐藏主内容区域 */
+        .main-content {
+            display: none;
+        }
+        
+        /* 密码修改界面 */
+        .change-password-section {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border: 1px solid #e9ecef;
+        }
+        
+        .change-password-section h3 {
+            color: #0077b6;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .password-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            align-items: end;
+        }
+        
+        .logout-btn {
+            background: linear-gradient(135deg, #f44336, #ef5350);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-left: 1rem;
+        }
+        
+        .logout-btn:hover {
+            background: linear-gradient(135deg, #e53935, #f44336);
+            transform: translateY(-1px);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, #0077b6, #00b4d8);
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .admin-header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        .admin-nav {
+            background: white;
+            padding: 0 2rem;
+            border-bottom: 1px solid #e9ecef;
+            overflow-x: auto;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            list-style: none;
+            gap: 0;
+        }
+        
+        .nav-tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+        
+        .nav-tab.active {
+            color: #0077b6;
+            border-bottom-color: #0077b6;
+            background: #f8f9fa;
+        }
+        
+        .nav-tab:hover {
+            background: #f8f9fa;
+            color: #0077b6;
+        }
+        
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .content-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            color: #0077b6;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 0.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+        }
+        
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Noto Sans SC', sans-serif;
+            font-size: 0.95rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+        
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #0077b6;
+            box-shadow: 0 0 0 2px rgba(0, 119, 182, 0.1);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .product-card {
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1.5rem;
+            background: #fafafa;
+        }
+        
+        .product-card h4 {
+            color: #0077b6;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            min-width: 120px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #43a047, #4caf50);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #2196f3, #42a5f5);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #1976d2, #2196f3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #ff9800, #ffb74d);
+            color: white;
+        }
+        
+        .btn-warning:hover {
+            background: linear-gradient(135deg, #f57c00, #ff9800);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+        }
+        
+        .back-btn {
+            background: linear-gradient(135deg, #666, #888);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .image-manager {
+            margin-top: 1rem;
+        }
+        
+        .image-upload-area {
+            margin-bottom: 2rem;
+            padding: 2rem;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            text-align: center;
+            background: #fafafa;
+            transition: all 0.3s ease;
+        }
+        
+        .image-upload-area:hover {
+            border-color: #0077b6;
+            background: #f0f8ff;
+        }
+        
+        .image-upload-area h3 {
+            margin-bottom: 1rem;
+            color: #0077b6;
+            font-size: 1.2rem;
+        }
+        
+        .upload-instructions {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .image-upload-area input {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .upload-btn {
+            background: linear-gradient(135deg, #0077b6, #00b4d8);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 119, 182, 0.2);
+        }
+        
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 119, 182, 0.3);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: 1rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .nav-tabs {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+            }
+            
+            .nav-tab {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 登录界面 -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <div class="login-logo">
+                <img src="./images/logo.jpg" alt="雪顶山矿泉" class="logo-image">
+            </div>
+            <h1 class="login-title">雪顶山矿泉</h1>
+            <p class="login-subtitle">内容管理系统登录</p>
+            
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label for="password">请输入管理密码</label>
+                    <input type="password" id="password" placeholder="请输入密码" required>
+                    <div class="error-message" id="errorMessage">密码错误，请重试</div>
+                </div>
+                <button type="submit" class="login-btn">登录系统</button>
+            </form>
+            
+            <div style="margin-top: 2rem; font-size: 0.8rem; color: #888;">
+                <p>默认密码：admin123</p>
+                <p>首次登录后请及时修改密码</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主内容区域 -->
+    <div class="main-content" id="mainContent">
+        <header class="admin-header">
+            <h1>雪顶山矿泉 - 完整内容管理系统</h1>
+            <div class="admin-info">
+                <span id="currentTime"></span>
+                <button class="logout-btn" onclick="logout()">退出登录</button>
+            </div>
+        </header>
+    
+        <!-- 密码修改区域 -->
+        <div class="change-password-section">
+            <h3>修改管理密码</h3>
+            <form class="password-form" id="passwordForm">
+                <div class="form-group">
+                    <label for="currentPassword">当前密码</label>
+                    <input type="password" id="currentPassword" placeholder="请输入当前密码">
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">新密码</label>
+                    <input type="password" id="newPassword" placeholder="请输入新密码（至少6位）">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">确认新密码</label>
+                    <input type="password" id="confirmPassword" placeholder="请再次输入新密码">
+                </div>
+                <button type="submit" class="btn btn-primary" style="min-width: 120px;">修改密码</button>
+            </form>
+            <div class="password-message" id="passwordMessage" style="margin-top: 1rem; font-size: 0.9rem; display: none;"></div>
+        </div>
+    
+    <nav class="admin-nav">
+        <ul class="nav-tabs">
+            <li class="nav-tab active" data-tab="home">首页内容</li>
+            <li class="nav-tab" data-tab="about">关于我们</li>
+            <li class="nav-tab" data-tab="products">产品系列</li>
+            <li class="nav-tab" data-tab="quality">品质保证</li>
+            <li class="nav-tab" data-tab="contact">联系我们</li>
+            <li class="nav-tab" data-tab="join">招聘信息</li>
+            <li class="nav-tab" data-tab="health">健康饮水</li>
+            <li class="nav-tab" data-tab="images">图片管理</li>
+        </ul>
+    </nav>
+    
+    <div class="admin-container">
+        <!-- 首页内容管理 -->
+        <div id="home" class="tab-content active">
+            <div class="content-section">
+                <h2 class="section-title">首页内容管理</h2>
+                
+                <div class="form-group">
+                    <label for="heroTitle">首页标题</label>
+                    <input type="text" id="heroTitle" placeholder="请输入首页标题">
+                </div>
+                
+                <div class="form-group">
+                    <label for="heroSubtitle">首页副标题</label>
+                    <input type="text" id="heroSubtitle" placeholder="请输入首页副标题">
+                </div>
+                
+                <div class="form-group">
+                    <label for="heroSlogan">首页标语</label>
+                    <input type="text" id="heroSlogan" placeholder="请输入首页标语">
+                </div>
+                
+                <div class="form-group">
+                    <label for="aboutText">关于我们简介</label>
+                    <textarea id="aboutText" placeholder="请输入关于我们的简介内容"></textarea>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="saveHomeContent()">保存首页内容</button>
+                    <button class="btn btn-secondary" onclick="previewHomePage()">预览首页</button>
+                    <button class="btn btn-warning" onclick="resetHomeContent()">恢复默认</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 关于我们内容管理 -->
+        <div id="about" class="tab-content">
+            <div class="content-section">
+                <h2 class="section-title">关于我们内容管理</h2>
+                
+                <div class="form-group">
+                    <label for="companyIntro">公司简介</label>
+                    <textarea id="companyIntro" placeholder="请输入公司简介内容"></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="foundingYear">成立年份</label>
+                        <input type="text" id="foundingYear" placeholder="请输入成立年份">
+                    </div>
+                    <div class="form-group">
+                        <label for="factoryArea">生产基地面积</label>
+                        <input type="text" id="factoryArea" placeholder="请输入生产基地面积">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dailyProduction">日产能力</label>
+                        <input type="text" id="dailyProduction" placeholder="请输入日产能力">
+                    </div>
+                    <div class="form-group">
+                        <label for="testItems">检测指标数量</label>
+                        <input type="text" id="testItems" placeholder="请输入检测指标数量">
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="saveAboutContent()">保存关于我们内容</button>
+                    <button class="btn btn-secondary" onclick="previewAboutPage()">预览关于我们</button>
+                    <button class="btn btn-warning" onclick="resetAboutContent()">恢复默认</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 产品系列内容管理 -->
+        <div id="products" class="tab-content">
+            <div class="content-section">
+                <h2 class="section-title">产品系列内容管理</h2>
+                
+                <div class="product-grid">
+                    <div class="product-card">
+                        <h4>12500经典富锶天然泉水</h4>
+                        <div class="form-group">
+                            <label for="product1Name">产品名称</label>
+                            <input type="text" id="product1Name" placeholder="请输入产品名称">
+                        </div>
+                        <div class="form-group">
+                            <label for="product1Desc">产品描述</label>
+                            <textarea id="product1Desc" placeholder="请输入产品描述" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="product1Price">价格范围</label>
+                            <input type="text" id="product1Price" placeholder="请输入价格范围">
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <h4>母婴专用富锶天然泉水</h4>
+                        <div class="form-group">
+                            <label for="product2Name">产品名称</label>
+                            <input type="text" id="product2Name" placeholder="请输入产品名称">
+                        </div>
+                        <div class="form-group">
+                            <label for="product2Desc">产品描述</label>
+                            <textarea id="product2Desc" placeholder="请输入产品描述" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="product2Price">价格范围</label>
+                            <input type="text" id="product2Price" placeholder="请输入价格范围">
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <h4>青少年用水</h4>
+                        <div class="form-group">
+                            <label for="product3Name">产品名称</label>
+                            <input type="text" id="product3Name" placeholder="请输入产品名称">
+                        </div>
+                        <div class="form-group">
+                            <label for="product3Desc">产品描述</label>
+                            <textarea id="product3Desc" placeholder="请输入产品描述" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="product3Price">价格范围</label>
+                            <input type="text" id="product3Price" placeholder="请输入价格范围">
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <h4>气泡富锶天然泉水</h4>
+                        <div class="form-group">
+                            <label for="product4Name">产品名称</label>
+                            <input type="text" id="product4Name" placeholder="请输入产品名称">
+                        </div>
+                        <div class="form-group">
+                            <label for="product4Desc">产品描述</label>
+                            <textarea id="product4Desc" placeholder="请输入产品描述" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="product4Price">价格范围</label>
+                            <input type="text" id="product4Price" placeholder="请输入价格范围">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="saveProductsContent()">保存产品内容</button>
+                    <button class="btn btn-secondary" onclick="previewProductsPage()">预览产品页面</button>
+                    <button class="btn btn-warning" onclick="resetProductsContent()">恢复默认</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 品质保证内容管理 -->
+        <div id="quality" class="tab-content">
+            <div class="content-section">
+                <h2 class="section-title">品质保证内容管理</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="qualityFeature1">品质特性1</label>
+                        <input type="text" id="qualityFeature1" placeholder="请输入品质特性">
+                    </div>
+                    <div class="form-group">
+                        <label for="qualityDesc1">特性描述1</label>
+                        <input type="text" id="qualityDesc1" placeholder="请输入特性描述">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="qualityFeature2">品质特性2</label>
+                        <input type="text" id="qualityFeature2" placeholder="请输入品质特性">
+                    </div>
+                    <div class="form-group">
+                        <label for="qualityDesc2">特性描述2</label>
+                        <input type="text" id="qualityDesc2" placeholder="请输入特性描述">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="qualityFeature3">品质特性3</label>
+                        <input type="text" id="qualityFeature3" placeholder="请输入品质特性">
+                    </div>
+                    <div class="form-group">
+                        <label for="qualityDesc3">特性描述3</label>
+                        <input type="text" id="qualityDesc3" placeholder="请输入特性描述">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="qualityFeature4">品质特性4</label>
+                        <input type="text" id="qualityFeature4" placeholder="请输入品质特性">
+                    </div>
+                    <div class="form-group">
+                        <label for="qualityDesc4">特性描述4</label>
+                        <input type="text" id="qualityDesc4" placeholder="请输入特性描述">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="certificationText">认证说明</label>
+                    <textarea id="certificationText" placeholder="请输入认证说明内容"></textarea>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="saveQualityContent()">保存品质内容</button>
+                    <button class="btn btn-secondary" onclick="previewQualityPage()">预览品质页面</button>
+                    <button class="btn btn-warning" onclick="resetQualityContent()">恢复默认</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 联系我们内容管理 -->
+        <div id="contact" class="tab-content">
+            <div class="content-section">
+                <h2 class="section-title">联系我们内容管理</h2>
+                
+                <!-- 页面标题 -->
+                <div class="form-group">
+                    <label for="contactPageTitle">页面标题</label>
+                    <input type="text" id="contactPageTitle" placeholder="请输入页面标题">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contactPageSubtitle">页面副标题</label>
+                    <input type="text" id="contactPageSubtitle" placeholder="请输入页面副标题">
+                </div>
+                
+                <!-- 手册标题 -->
+                <div class="form-group">
+                    <label for="handbookTitle">招商加盟手册标题</label>
+                    <input type="text" id="handbookTitle" placeholder="请输入手册标题">
+                </div>
+                
+                <div class="form-group">
+                    <label for="handbookSubtitle">手册副标题</label>
+                    <input type="text" id="handbookSubtitle" placeholder="请输入手册副标题">
+                </div>
+                
+                <!-- 品牌简介 -->
+                <div class="form-group">
+                    <label for="brandIntro">一、品牌简介</label>
+                    <textarea id="brandIntro" placeholder="请输入品牌简介内容" rows="4"></textarea>
+                </div>
+                
+                <!-- 加盟优势 -->
+                <h3 style="color: #0077b6; margin: 2rem 0 1rem 0;">二、加盟优势</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="advantage1Title">优势1标题</label>
+                        <input type="text" id="advantage1Title" placeholder="请输入优势标题">
+                    </div>
+                    <div class="form-group">
+                        <label for="advantage1Desc">优势1描述</label>
+                        <textarea id="advantage1Desc" placeholder="请输入优势描述" rows="2"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="advantage2Title">优势2标题</label>
+                        <input type="text" id="advantage2Title" placeholder="请输入优势标题">
+                    </div>
+                    <div class="form-group">
+                        <label for="advantage2Desc">优势2描述</label>
+                        <textarea id="advantage2Desc" placeholder="请输入优势描述" rows="2"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="advantage3Title">优势3标题</label>
+                        <input type="text" id="advantage3Title" placeholder="请输入优势标题">
+                    </div>
+                    <div class="form-group">
+                        <label for="advantage3Desc">优势3描述</label>
+                        <textarea id="advantage3Desc" placeholder="请输入优势描述" rows="2"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="advantage4Title">优势4标题</label>
+                        <input type="text" id="advantage4Title" placeholder="请输入优势标题">
+                    </div>
+                    <div class="form-group">
+                        <label for="advantage4Desc">优势4描述</label>
+                        <textarea id="advantage4Desc" placeholder="请输入优势描述" rows="2"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="advantage5Title">优势5标题</label>
+                        <input type="text" id="advantage5Title" placeholder="请输入优势标题">
+                    </div>
+                    <div class="form-group">
+                        <label for="advantage5Desc">优势5描述</label>
+                        <textarea id="advantage5Desc" placeholder="请输入优势描述" rows="2"></textarea>
+                    </div>
+                </div>
+                
+                <!-- 经销层级表格 -->
+                <h3 style="color: #0077b6; margin: 2rem 0 1rem 0;">三、经销层级与核心要求</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dealerLevel1">层级1名称</label>
+                        <input type="text" id="dealerLevel1" placeholder="请输入层级名称">
+                    </div>
+                    <div class="form-group">
+                        <label for="dealerAmount1">层级1首批金额</label>
+                        <input type="text" id="dealerAmount1" placeholder="请输入首批金额">
+                    </div>
+                    <div class="form-group">
+                        <label for="dealerTarget1">层级1年度目标</label>
+                        <input type="text" id="dealerTarget1" placeholder="请输入年度目标">
+                    </div>
+                    <div class="form-group">
+                        <label for="dealerRights1">层级1核心权益</label>
+                        <input type="text" id="dealerRights1" placeholder="请输入核心权益">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dealerLevel2">层级2名称</label>
+                        <input type="text" id="dealerLevel2" placeholder="请输入层级名称">
+                    </div>
+                    <div class="form-group">
+                        <label for="dealerAmount2">层级2首批金额</label>
+                        <input type="text" id="dealerAmount2" placeholder="请输入首批金额">
+                    </div>
+                    <div class="form-group">
+                        <label for="dealerTarget2">层级2年度目标</label>
+                        <input type="text" id="dealerTarget2" placeholder="请输入年度目标">
+                    </div>
+                    <div class="form-group">
+                        <label for="dealerRights2">层级2核心权益</label>
+                        <input type="text" id="dealerRights2" placeholder="请输入核心权益">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dealerLevel3">层级3名称</label>
+                        <input type="text" id="dealerLevel3" placeholder="请输入层级名称">
+                    </div>
+                    <div class="form-group">
+                        <label for="dealerAmount3">层级3首批金额</label>
+                        <input type="text" id="dealerAmount3" placeholder="请输入首批金额">
+                    </div>
+                    <div class="form-group">
+                        <label for="dealerTarget3">层级3年度目标</label>
+                        <input type="text" id="dealerTarget3" placeholder="请输入年度目标">
+                    </div>
+                    <div class="form-group">
+                        <label for="dealerRights3">层级3核心权益</label>
+                        <input type="text" id="dealerRights3" placeholder="请输入核心权益">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dealerLevel4">层级4名称</label>
+                        <input type="text" id="dealerLevel4" placeholder="请输入层级名称">
+                    </div>
+                    <div class="form-group">
+                        <label for="dealerAmount4">层级4首批金额</label>
+                        <input type="text" id="dealerAmount4" placeholder="请输入首批金额">
+                    </div>
+                    <div class="form-group">
+                        <label for="dealerTarget4">层级4年度目标</label>
+                        <input type="text" id="dealerTarget4" placeholder="请输入年度目标">
+                    </div>
+                    <div class="form-group">
+                        <label for="dealerRights4">层级4核心权益</label>
+                        <input type="text" id="dealerRights4" placeholder="请输入核心权益">
+                    </div>
+                </div>
+                
+                <!-- 加盟条件 -->
+                <div class="form-group">
+                    <label for="condition1">加盟条件1</label>
+                    <input type="text" id="condition1" placeholder="请输入加盟条件">
+                </div>
+                
+                <div class="form-group">
+                    <label for="condition2">加盟条件2</label>
+                    <input type="text" id="condition2" placeholder="请输入加盟条件">
+                </div>
+                
+                <div class="form-group">
+                    <label for="condition3">加盟条件3</label>
+                    <input type="text" id="condition3" placeholder="请输入加盟条件">
+                </div>
+                
+                <div class="form-group">
+                    <label for="condition4">加盟条件4</label>
+                    <input type="text" id="condition4" placeholder="请输入加盟条件">
+                </div>
+                
+                <!-- 联系方式 -->
+                <h3 style="color: #0077b6; margin: 2rem 0 1rem 0;">八、联系方式</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="companyName">授权运营方</label>
+                        <input type="text" id="companyName" placeholder="请输入授权运营方">
+                    </div>
+                    <div class="form-group">
+                        <label for="companyAddress">公司地址</label>
+                        <input type="text" id="companyAddress" placeholder="请输入公司地址">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contactPhone">联系电话</label>
+                        <input type="text" id="contactPhone" placeholder="请输入联系电话">
+                    </div>
+                    <div class="form-group">
+                        <label for="contactEmail">联系邮箱</label>
+                        <input type="text" id="contactEmail" placeholder="请输入联系邮箱">
+                    </div>
+                </div>
+                
+                <!-- 行动号召 -->
+                <div class="form-group">
+                    <label for="ctaTitle">行动号召标题</label>
+                    <input type="text" id="ctaTitle" placeholder="请输入行动号召标题">
+                </div>
+                
+                <div class="form-group">
+                    <label for="ctaSubtitle">行动号召副标题</label>
+                    <input type="text" id="ctaSubtitle" placeholder="请输入行动号召副标题">
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="saveContactContent()">保存联系内容</button>
+                    <button class="btn btn-secondary" onclick="previewContactPage()">预览联系页面</button>
+                    <button class="btn btn-warning" onclick="resetContactContent()">恢复默认</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 健康饮水内容管理 -->
+        <div id="health" class="tab-content">
+            <div class="content-section">
+                <h2 class="section-title">健康饮水内容管理</h2>
+                
+                <div class="form-group">
+                    <label for="healthTitle">健康饮水页面标题</label>
+                    <input type="text" id="healthTitle" placeholder="请输入健康饮水页面标题">
+                </div>
+                
+                <div class="form-group">
+                    <label for="healthSubtitle">健康饮水页面副标题</label>
+                    <input type="text" id="healthSubtitle" placeholder="请输入健康饮水页面副标题">
+                </div>
+                
+                <div class="form-group">
+                    <label for="strontiumTitle">富锶低氘天然泉水标题</label>
+                    <input type="text" id="strontiumTitle" placeholder="请输入富锶低氘天然泉水标题">
+                </div>
+                
+                <div class="form-group">
+                    <label for="strontiumIntro">富锶低氘天然泉水介绍</label>
+                    <textarea id="strontiumIntro" placeholder="请输入富锶低氘天然泉水介绍内容" rows="4"></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="strontiumBenefit1">锶元素益处1</label>
+                        <input type="text" id="strontiumBenefit1" placeholder="请输入锶元素益处">
+                    </div>
+                    <div class="form-group">
+                        <label for="strontiumBenefit2">锶元素益处2</label>
+                        <input type="text" id="strontiumBenefit2" placeholder="请输入锶元素益处">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="strontiumBenefit3">锶元素益处3</label>
+                        <input type="text" id="strontiumBenefit3" placeholder="请输入锶元素益处">
+                    </div>
+                    <div class="form-group">
+                        <label for="strontiumBenefit4">锶元素益处4</label>
+                        <input type="text" id="strontiumBenefit4" placeholder="请输入锶元素益处">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="sourceFeatures">水源地特色介绍</label>
+                    <textarea id="sourceFeatures" placeholder="请输入水源地特色介绍内容" rows="4"></textarea>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="saveHealthContent()">保存健康饮水内容</button>
+                    <button class="btn btn-secondary" onclick="previewHealthPage()">预览健康饮水页面</button>
+                    <button class="btn btn-warning" onclick="resetHealthContent()">恢复默认</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 招聘信息管理 -->
+        <div id="join" class="tab-content">
+            <div class="content-section">
+                <h2 class="section-title">招聘信息管理</h2>
+                
+                <!-- 页面标题区域 -->
+                <div class="form-group">
+                    <label for="joinPageTitle">页面标题</label>
+                    <input type="text" id="joinPageTitle" placeholder="请输入页面标题" value="招聘信息">
+                </div>
+                
+                <div class="form-group">
+                    <label for="joinPageSubtitle">页面副标题</label>
+                    <input type="text" id="joinPageSubtitle" placeholder="请输入页面副标题" value="携手共创未来，与雪顶山矿泉一起成长">
+                </div>
+                
+                <!-- 电商美工专员 -->
+                <div class="content-section">
+                    <h3 class="section-subtitle">电商美工专员</h3>
+                    
+                    <div class="form-group">
+                        <label for="job1Title">职位标题</label>
+                        <input type="text" id="job1Title" placeholder="请输入职位标题" value="电商美工专员">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="job1Location">工作地点</label>
+                        <input type="text" id="job1Location" placeholder="请输入工作地点" value="太原市迎泽区桃园南路31号鸿富商务楼10层">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="job1Salary">薪资范围</label>
+                        <input type="text" id="job1Salary" placeholder="请输入薪资范围" value="5-8K（优秀者上不封顶，面议）">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="job1Education">学历要求</label>
+                        <input type="text" id="job1Education" placeholder="请输入学历要求" value="大专及以上">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="job1Experience">经验要求</label>
+                        <input type="text" id="job1Experience" placeholder="请输入经验要求" value="1年+电商美工经验">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="job1Responsibilities">岗位职责</label>
+                        <textarea id="job1Responsibilities" placeholder="请输入岗位职责" rows="4">核心负责电商平台（天猫、京东、抖音）主图、详情页、活动海报设计，贴合富锶天然泉水纯净调性，提升转化
+独立完成产品短视频全流程剪辑（剪映/PR/AE），产出电商适配内容（产品介绍、营销推广），强化内容感染力
+配合运营响应营销视觉需求，同步优化视觉素材库，跟进行业趋势迭代设计风格</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="job1Requirements">任职要求</label>
+                        <textarea id="job1Requirements" placeholder="请输入任职要求" rows="4">1年+电商美工经验，快消/食品饮料行业经验优先，熟悉饮品视觉调性加分
+精通PS、AI，能独立完成全流程设计；熟练用剪映/PR/AE，可独立产出电商短视频，需提供作品集
+审美在线、创意佳，能精准匹配品牌风格，高效配合团队，可应对大促紧急需求
+大专及以上，设计相关专业优先</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="job1Benefits">薪资福利</label>
+                        <textarea id="job1Benefits" placeholder="请输入薪资福利" rows="4">薪资5-8K（优秀者上不封顶，面议），试用期薪资不打折
+五险、带薪年假、节日福利、免费员工富锶天然泉水、餐/交通补、年度体检
+绩效奖金+年终分红，技能培训+清晰晋升通道，舒适办公拒绝内卷</textarea>
+                    </div>
+                </div>
+                
+                <!-- 招商专员 -->
+                <div class="content-section">
+                    <h3 class="section-subtitle">招商专员</h3>
+                    
+                    <div class="form-group">
+                        <label for="job2Title">职位标题</label>
+                        <input type="text" id="job2Title" placeholder="请输入职位标题" value="招商专员（线下经销商渠道）">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="job2Location">工作地点</label>
+                        <input type="text" id="job2Location" placeholder="请输入工作地点" value="太原市迎泽区桃园南路31号鸿富商务楼10层（需配合区域市场出差）">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="job2Salary">薪资范围</label>
+                        <input type="text" id="job2Salary" placeholder="请输入薪资范围" value="6-10K+高额招商提成（上不封顶）">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="job2Education">学历要求</label>
+                        <input type="text" id="job2Education" placeholder="请输入学历要求" value="大专及以上">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="job2Experience">经验要求</label>
+                        <input type="text" id="job2Experience" placeholder="请输入经验要求" value="1年+快消品/食品饮料行业线下招商经验">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="job2Responsibilities">岗位职责</label>
+                        <textarea id="job2Responsibilities" placeholder="请输入岗位职责" rows="4">核心负责线下经销商渠道拓展，调研区域市场（商超、便利店、餐饮、流通等），挖掘潜在经销商客户，达成招商目标
+对接意向经销商，讲解品牌政策、产品优势及合作模式，洽谈合作细节，推进签约落地，维护合作关系
+跟进已合作经销商，协助解决铺货、动销等问题，提升复购与渠道稳定性，拓展区域市场渗透率
+收集市场竞品招商政策、渠道动态，反馈给公司，优化招商策略，助力市场拓展</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="job2Requirements">任职要求</label>
+                        <textarea id="job2Requirements" placeholder="请输入任职要求" rows="4">1年+快消品/食品饮料行业线下招商经验，有富锶天然泉水/饮品经销商渠道资源者优先，熟悉区域招商流程
+具备较强的市场洞察力、沟通谈判能力，能独立开发经销商，高效推进招商全流程
+抗压能力强，愿意出差拓展市场，目标感明确，能精准对接客户需求并解决问题
+大专及以上学历，市场营销、商务拓展等相关专业优先，执行力强、具备团队协作意识</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="job2Benefits">薪资福利</label>
+                        <textarea id="job2Benefits" placeholder="请输入薪资福利" rows="4">薪资：6-10K+高额招商提成（上不封顶），试用期薪资不打折，业绩优异者薪资无上限
+基础福利：五险、带薪年假、节日福利、免费员工富锶天然泉水、餐补/交通补/出差补贴、年度体检
+激励福利：绩效奖金、年终分红、招商达标奖金，清晰晋升通道（招商专员→招商主管→区域招商经理）</textarea>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="saveJoinContent()">保存招聘信息</button>
+                    <button class="btn btn-secondary" onclick="previewJoinPage()">预览招聘页面</button>
+                    <button class="btn btn-warning" onclick="resetJoinContent()">恢复默认</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 图片管理 -->
+        <div id="images" class="tab-content">
+            <div class="content-section">
+                <h2 class="section-title">图片管理</h2>
+                
+                <div class="image-upload-area">
+                    <h3>上传新图片</h3>
+                    <p class="upload-instructions">支持 JPG、PNG 格式，建议图片大小不超过 5MB</p>
+                    <input type="file" id="imageUpload" accept="image/jpeg,image/png" multiple>
+                    <button class="upload-btn" onclick="uploadImages()">上传图片</button>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="previewWebsite()">预览整个网站</button>
+                    <button class="btn btn-warning" onclick="exportAllContent()">导出所有内容</button>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="index.html" class="back-btn">返回网站首页</a>
+        </div>
+    </div>
+
+    <script>
+        // 密码管理功能
+        const DEFAULT_PASSWORD = 'admin123';
+        
+        // 获取存储的密码，如果没有则使用默认密码
+        function getStoredPassword() {
+            const storedPassword = localStorage.getItem('adminPassword');
+            return storedPassword || DEFAULT_PASSWORD;
+        }
+        
+        // 设置新密码
+        function setPassword(newPassword) {
+            localStorage.setItem('adminPassword', newPassword);
+        }
+        
+        // 检查登录状态
+        function checkLoginStatus() {
+            return sessionStorage.getItem('isLoggedIn') === 'true';
+        }
+        
+        // 设置登录状态
+        function setLoginStatus(loggedIn) {
+            sessionStorage.setItem('isLoggedIn', loggedIn ? 'true' : 'false');
+        }
+        
+        // 登录功能
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const passwordInput = document.getElementById('password');
+            const errorMessage = document.getElementById('errorMessage');
+            const password = passwordInput.value;
+            const storedPassword = getStoredPassword();
+            
+            if (password === storedPassword) {
+                setLoginStatus(true);
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                
+                // 初始化主界面
+                updateCurrentTime();
+                setInterval(updateCurrentTime, 60000);
+                loadAllContent();
+                bindTabEvents();
+            } else {
+                errorMessage.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        }
+        
+        // 退出登录
+        function logout() {
+            if (confirm('确定要退出登录吗？')) {
+                setLoginStatus(false);
+                document.getElementById('mainContent').style.display = 'none';
+                document.getElementById('loginContainer').style.display = 'flex';
+                
+                // 清空密码输入框
+                document.getElementById('password').value = '';
+                document.getElementById('errorMessage').style.display = 'none';
+            }
+        }
+        
+        // 修改密码功能
+        function handlePasswordChange(event) {
+            event.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const messageDiv = document.getElementById('passwordMessage');
+            const storedPassword = getStoredPassword();
+            
+            // 验证当前密码
+            if (currentPassword !== storedPassword) {
+                showMessage('当前密码错误，请重试', 'error');
+                return;
+            }
+            
+            // 验证新密码长度
+            if (newPassword.length < 6) {
+                showMessage('新密码长度至少6位', 'error');
+                return;
+            }
+            
+            // 验证两次密码是否一致
+            if (newPassword !== confirmPassword) {
+                showMessage('两次输入的密码不一致', 'error');
+                return;
+            }
+            
+            // 设置新密码
+            setPassword(newPassword);
+            showMessage('密码修改成功！', 'success');
+            
+            // 清空表单
+            document.getElementById('passwordForm').reset();
+        }
+        
+        // 显示消息
+        function showMessage(message, type) {
+            const messageDiv = document.getElementById('passwordMessage');
+            messageDiv.textContent = message;
+            messageDiv.style.display = 'block';
+            messageDiv.style.color = type === 'success' ? '#4caf50' : '#f44336';
+            
+            // 3秒后自动隐藏
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 3000);
+        }
+        
+        // 页面加载时检查登录状态
+        document.addEventListener('DOMContentLoaded', function() {
+            // 绑定登录表单事件
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+            
+            // 绑定密码修改表单事件
+            document.getElementById('passwordForm').addEventListener('submit', handlePasswordChange);
+            
+            // 检查登录状态
+            if (checkLoginStatus()) {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                
+                // 初始化主界面
+                updateCurrentTime();
+                setInterval(updateCurrentTime, 60000);
+                loadAllContent();
+                bindTabEvents();
+            } else {
+                document.getElementById('loginContainer').style.display = 'flex';
+                document.getElementById('mainContent').style.display = 'none';
+            }
+        });
+
+        // 默认内容配置
+        const defaultContent = {
+            home: {
+                heroTitle: '源自太行山脉的纯净之水',
+                heroSubtitle: '北纬37°黄金水源带，八缚岭深层岩层过滤',
+                heroSlogan: '每一滴都承载着大自然的纯净馈赠',
+                aboutText: '雪顶山矿泉®源自太行山脉八缚岭自然保护区，位于世界黄金水源带北纬37度。我们的水源来自深层岩层自然过滤，富含钙、镁、钾、钠等多种天然矿物质。八缚岭自然保护区占地15000公顷，森林覆盖率超过80%，每一滴雪顶山矿泉®都承载着大自然的纯净馈赠。'
+            },
+            about: {
+                companyIntro: '雪顶山矿泉是雪顶山矿泉水有限公司（2017年12月20日成立）注册的核心商标与主打品牌，公司总部位于山西晋中，是专注于富锶天然泉水采集、生产与销售的现代化产销一体企业，致力于为消费者提供源自高山秘境的富锶低氘天然泉水产品。',
+                foundingYear: '2017',
+                factoryArea: '40亩',
+                dailyProduction: '20万箱',
+                testItems: '106项'
+            },
+            products: {
+                product1: {
+                    name: '12500经典富锶天然泉水',
+                    description: '源自八缚岭深层岩层，富含天然矿物质',
+                    price: '¥4.5-45'
+                },
+                product2: {
+                    name: '母婴用水',
+                    description: '低钠弱碱性，适合孕妇和婴幼儿',
+                    price: '¥13.5-45'
+                },
+                product3: {
+                    name: '青少年用水',
+                    description: '富含钙镁元素，助力青少年成长',
+                    price: '¥6-9'
+                },
+                product4: {
+                    name: '气泡富锶天然泉水',
+                    description: '天然气泡，清爽口感',
+                    price: '¥4-6'
+                }
+            },
+            quality: {
+                feature1: '黄金水源',
+                desc1: '北纬37°世界黄金水源带',
+                feature2: '自然过滤',
+                desc2: '八缚岭深层岩层自然过滤',
+                feature3: '严格检测',
+                desc3: '106项指标严格检测',
+                feature4: '环保包装',
+                desc4: '可回收材料，环保可持续',
+                certificationText: '雪顶山矿泉®通过国家权威机构检测，富含天然锶元素，锶含量达到优质富锶天然泉水标准。锶元素对人体骨骼健康、心血管系统具有重要保健作用。'
+            },
+            contact: {
+                contactPageTitle: '联系我们',
+                contactPageSubtitle: '雪顶山矿泉招商加盟手册',
+                handbookTitle: '雪顶山矿泉招商加盟手册',
+                handbookSubtitle: '携手共赢，共创未来',
+                brandIntro: '雪顶山矿泉是雪顶山矿泉水有限公司核心注册商标，专注于富锶低氘天然泉水领域，水源源自山西和顺县八缚岭自然保护区深层岩层，产品涵盖家庭装、泡茶装、小瓶水等多规格，符合国家《GB8537 饮用富锶天然泉水》标准，品质有保障。山西联拓国际贸易有限公司为独家授权运营方，负责全国经销体系搭建与服务。',
+                advantage1Title: '品牌保障',
+                advantage1Desc: '注册商标加持，统一品牌形象与宣传规范，合规运营无风险',
+                advantage2Title: '产品多元',
+                advantage2Desc: '10L 家庭桶、5L 泡茶装、330ml/420ml 小瓶水等多规格，覆盖家庭、餐饮、办公等全场景',
+                advantage3Title: '政策公平',
+                advantage3Desc: '所有层级经销商享统一含税出厂价，无差异化定价，保障公平竞争',
+                advantage4Title: '返利激励',
+                advantage4Desc: '完成年度销售目标即享 3%-8% 梯度返利，超额部分额外上浮，收益可观',
+                advantage5Title: '区域保护',
+                advantage5Desc: '独家经销权覆盖指定区县 / 地市，严控跨区窜货，保障区域经营权益',
+                dealerLevel1: '区县级',
+                dealerAmount1: '≥2 万元',
+                dealerTarget1: '12 万元',
+                dealerRights1: '区县独家运营，可开发二级经销商',
+                dealerLevel2: '地市级',
+                dealerAmount2: '≥5 万元',
+                dealerTarget2: '35 万元',
+                dealerRights2: '地市全域授权，统筹区域特渠',
+                dealerLevel3: '省会城市',
+                dealerAmount3: '≥15 万元',
+                dealerTarget3: '100 万元',
+                dealerRights3: '搭建仓储配送，负责城市级推广',
+                dealerLevel4: '一线城市',
+                dealerAmount4: '≥30 万元',
+                dealerTarget4: '160 万元',
+                dealerRights4: '全渠道统筹，协助管控市场秩序',
+                condition1: '具备合法食品经营资质（企业 / 个体工商户均可）',
+                condition2: '认同品牌理念，遵守品牌使用规范与市场管控规则',
+                condition3: '按对应层级足额支付首批进货款项，具备区域渠道开发能力',
+                condition4: '承诺完成年度销售目标，配合甲方巡检与数据上报',
+            },
+            health: {
+                healthTitle: '健康饮水',
+                healthSubtitle: '让正确喝水成为每个人的健康习惯',
+                strontiumTitle: '雪顶山：富锶低氘天然泉水',
+                strontiumIntro: '雪顶山矿泉不仅是富锶天然泉水，更是珍贵的富锶低氘天然泉水。锶元素是人体必需的微量元素，对骨骼健康、心血管系统具有重要保健作用。',
+                strontiumBenefit1: '促进骨骼健康',
+                strontiumBenefit2: '保护心血管',
+                strontiumBenefit3: '增强免疫力',
+                strontiumBenefit4: '低氘特性',
+                sourceFeatures: '雪顶山矿泉源自八缚岭自然保护区，纯净水源的天然屏障。位于北纬37°黄金水源带，太行山脉八缚岭自然保护区，海拔1813.8米，是榆次最高峰。森林覆盖率超过80%，远离城市工业污染，为水源提供天然过滤净化系统。深层岩层自然过滤，富含钙、镁、钾、钠等天然矿物质，符合国家优质富锶天然泉水标准。国家级自然保护区，实施严格的水源地保护政策，确保水源纯净无污染。'
+            },
+            join: {
+                joinPageTitle: '招聘信息',
+                joinPageSubtitle: '携手共创未来，与雪顶山矿泉一起成长',
+                
+                // 电商美工专员
+                job1Title: '电商美工专员',
+                job1Location: '太原市迎泽区桃园南路31号鸿富商务楼10层',
+                job1Salary: '5-8K（优秀者上不封顶，面议）',
+                job1Education: '大专及以上',
+                job1Experience: '1年+电商美工经验',
+                job1Responsibilities: '核心负责电商平台（天猫、京东、抖音）主图、详情页、活动海报设计，贴合富锶天然泉水纯净调性，提升转化\n独立完成产品短视频全流程剪辑（剪映/PR/AE），产出电商适配内容（产品介绍、营销推广），强化内容感染力\n配合运营响应营销视觉需求，同步优化视觉素材库，跟进行业趋势迭代设计风格',
+                job1Requirements: '1年+电商美工经验，快消/食品饮料行业经验优先，熟悉饮品视觉调性加分\n精通PS、AI，能独立完成全流程设计；熟练用剪映/PR/AE，可独立产出电商短视频，需提供作品集\n审美在线、创意佳，能精准匹配品牌风格，高效配合团队，可应对大促紧急需求\n大专及以上，设计相关专业优先',
+                job1Benefits: '薪资5-8K（优秀者上不封顶，面议），试用期薪资不打折\n五险、带薪年假、节日福利、免费员工富锶天然泉水、餐/交通补、年度体检\n绩效奖金+年终分红，技能培训+清晰晋升通道，舒适办公拒绝内卷',
+                
+                // 招商专员
+                job2Title: '招商专员（线下经销商渠道）',
+                job2Location: '太原市迎泽区桃园南路31号鸿富商务楼10层（需配合区域市场出差）',
+                job2Salary: '6-10K+高额招商提成（上不封顶）',
+                job2Education: '大专及以上',
+                job2Experience: '1年+快消品/食品饮料行业线下招商经验',
+                job2Responsibilities: '核心负责线下经销商渠道拓展，调研区域市场（商超、便利店、餐饮、流通等），挖掘潜在经销商客户，达成招商目标\n对接意向经销商，讲解品牌政策、产品优势及合作模式，洽谈合作细节，推进签约落地，维护合作关系\n跟进已合作经销商，协助解决铺货、动销等问题，提升复购与渠道稳定性，拓展区域市场渗透率\n收集市场竞品招商政策、渠道动态，反馈给公司，优化招商策略，助力市场拓展',
+                job2Requirements: '1年+快消品/食品饮料行业线下招商经验，有富锶天然泉水/饮品经销商渠道资源者优先，熟悉区域招商流程\n具备较强的市场洞察力、沟通谈判能力，能独立开发经销商，高效推进招商全流程\n抗压能力强，愿意出差拓展市场，目标感明确，能精准对接客户需求并解决问题\n大专及以上学历，市场营销、商务拓展等相关专业优先，执行力强、具备团队协作意识',
+                job2Benefits: '薪资：6-10K+高额招商提成（上不封顶），试用期薪资不打折，业绩优异者薪资无上限\n基础福利：五险、带薪年假、节日福利、免费员工富锶天然泉水、餐补/交通补/出差补贴、年度体检\n激励福利：绩效奖金、年终分红、招商达标奖金，清晰晋升通道（招商专员→招商主管→区域招商经理）'
+            }
+        };
+
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 设置当前时间
+            updateCurrentTime();
+            setInterval(updateCurrentTime, 60000);
+            
+            // 加载所有内容
+            loadAllContent();
+            
+            // 绑定标签页切换事件
+            bindTabEvents();
+            
+            // 启用实时预览功能
+            enableLivePreview();
+        });
+
+        // 更新当前时间
+        function updateCurrentTime() {
+            const now = new Date();
+            const timeString = now.toLocaleString('zh-CN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+
+        // 绑定标签页切换事件
+        function bindTabEvents() {
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // 移除所有active类
+                    tabs.forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // 添加active类
+                    this.classList.add('active');
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        }
+
+        // 从后端API加载所有内容
+        async function loadAllContent() {
+            try {
+                const response = await fetch('/api/config');
+                if (response.ok) {
+                    const config = await response.json();
+                    loadHomeContent(config);
+                    loadAboutContent(config);
+                    loadProductsContent(config);
+                    loadQualityContent(config);
+                    loadContactContent(config);
+                    loadHealthContent(config);
+                } else {
+                    console.error('加载配置失败:', response.statusText);
+                    // 如果加载失败，使用默认内容
+                    loadHomeContent();
+                    loadAboutContent();
+                    loadProductsContent();
+                    loadQualityContent();
+                    loadContactContent();
+                    loadHealthContent();
+                }
+            } catch (error) {
+                console.error('加载配置出错:', error);
+                // 出错时使用默认内容
+                loadHomeContent();
+                loadAboutContent();
+                loadProductsContent();
+                loadQualityContent();
+                loadContactContent();
+                loadHealthContent();
+            }
+        }
+
+        // 首页内容管理函数
+        function loadHomeContent(config = null) {
+            const content = config && config.home ? config.home : defaultContent.home;
+            
+            document.getElementById('heroTitle').value = content.heroTitle || defaultContent.home.heroTitle;
+            document.getElementById('heroSubtitle').value = content.heroSubtitle || defaultContent.home.heroSubtitle;
+            document.getElementById('heroSlogan').value = content.heroSlogan || defaultContent.home.heroSlogan;
+            document.getElementById('aboutText').value = content.aboutText || defaultContent.home.aboutText;
+        }
+
+        async function saveHomeContent() {
+            try {
+                // 先获取当前的完整配置
+                let response = await fetch('/api/config');
+                let config = {};
+                if (response.ok) {
+                    config = await response.json();
+                }
+                
+                // 更新首页内容
+                config.home = {
+                    heroTitle: document.getElementById('heroTitle').value,
+                    heroSubtitle: document.getElementById('heroSubtitle').value,
+                    heroSlogan: document.getElementById('heroSlogan').value,
+                    aboutText: document.getElementById('aboutText').value
+                };
+                
+                // 保存到后端
+                response = await fetch('/api/config', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(config)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    alert(result.message || '首页内容保存成功！');
+                } else {
+                    alert('保存失败: ' + response.statusText);
+                }
+            } catch (error) {
+                console.error('保存首页内容出错:', error);
+                alert('保存失败: ' + error.message);
+            }
+        }
+
+        function resetHomeContent() {
+            if (confirm('确定要恢复首页默认内容吗？')) {
+                document.getElementById('heroTitle').value = defaultContent.home.heroTitle;
+                document.getElementById('heroSubtitle').value = defaultContent.home.heroSubtitle;
+                document.getElementById('heroSlogan').value = defaultContent.home.heroSlogan;
+                document.getElementById('aboutText').value = defaultContent.home.aboutText;
+                alert('首页内容已恢复默认');
+            }
+        }
+
+        function previewHomePage() {
+            saveHomeContent();
+            createPreviewWindow('home');
+        }
+        
+        // 实时预览功能
+        function enableLivePreview() {
+            // 监听首页内容输入变化
+            document.getElementById('heroTitle').addEventListener('input', function() {
+                updatePreviewElement('hero-title', this.value);
+            });
+            
+            document.getElementById('heroSubtitle').addEventListener('input', function() {
+                updatePreviewElement('hero-subtitle', this.value);
+            });
+            
+            document.getElementById('heroSlogan').addEventListener('input', function() {
+                updatePreviewElement('hero-slogan', this.value);
+            });
+            
+            document.getElementById('aboutText').addEventListener('input', function() {
+                updatePreviewElement('about-text', this.value);
+            });
+        }
+        
+        // 创建预览窗口
+        function createPreviewWindow(pageType) {
+            const previewWindow = window.open('', 'preview', 'width=1200,height=800,resizable=yes,scrollbars=yes');
+            
+            // 根据页面类型生成预览内容
+            let previewContent = '';
+            if(pageType === 'home') {
+                const title = document.getElementById('heroTitle').value || defaultContent.home.heroTitle;
+                const subtitle = document.getElementById('heroSubtitle').value || defaultContent.home.heroSubtitle;
+                const slogan = document.getElementById('heroSlogan').value || defaultContent.home.heroSlogan;
+                const about = document.getElementById('aboutText').value || defaultContent.home.aboutText;
+                
+                previewContent = `
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页预览 - 雪顶山矿泉</title>
+    <style>
+        :root {
+            --evian-blue: #0077b6;
+            --evian-light-blue: #00b4d8;
+            --evian-dark-blue: #023e8a;
+            --pure-white: #ffffff;
+            --snow-white: #f8f9fa;
+            --ice-gray: #e9ecef;
+            --mountain-gray: #6c757d;
+            --glacier-blue: #caf0f8;
+            --gradient-blue: linear-gradient(135deg, var(--evian-blue), var(--evian-light-blue));
+            --gradient-light: linear-gradient(135deg, var(--glacier-blue), var(--pure-white));
+        }
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            line-height: 1.6;
+            color: var(--mountain-gray);
+            background-color: var(--pure-white);
+            margin: 0;
+            padding: 20px;
+        }
+        .hero {
+            background: var(--gradient-light);
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+        .hero-title {
+            font-size: 2.5rem;
+            color: var(--evian-dark-blue);
+            margin-bottom: 10px;
+        }
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--evian-blue);
+            margin-bottom: 15px;
+        }
+        .hero-slogan {
+            font-size: 1.1rem;
+            color: var(--mountain-gray);
+            margin-bottom: 20px;
+        }
+        .about {
+            background: var(--snow-white);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 119, 182, 0.1);
+        }
+        .about h2 {
+            color: var(--evian-dark-blue);
+            margin-bottom: 20px;
+        }
+        .about p {
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="hero">
+            <h1 class="hero-title">${title}</h1>
+            <p class="hero-subtitle">${subtitle}</p>
+            <p class="hero-slogan">${slogan}</p>
+        </section>
+        
+        <section class="about">
+            <h2>雪顶山的故事</h2>
+            <p>${about}</p>
+        </section>
+    </div>
+</body>
+</html>`;
+            }
+            
+            previewWindow.document.write(previewContent);
+            previewWindow.document.close();
+            return previewWindow;
+        }
+        
+        // 更新预览元素
+        function updatePreviewElement(selector, content) {
+            // 这里我们不会直接操作页面，而是提示用户保存后刷新预览
+            // 因为我们不能直接修改其他页面的DOM
+            // 但在实际应用中，这里可以发送WebSocket消息或API调用来实时更新
+            console.log(`预览更新: ${selector} -> ${content}`);
+        }
+        
+        // 在页面加载完成后启用实时预览
+        document.addEventListener('DOMContentLoaded', function() {
+            // 设置当前时间
+            updateCurrentTime();
+            setInterval(updateCurrentTime, 60000);
+            
+            // 加载所有内容
+            loadAllContent();
+            
+            // 绑定标签页切换事件
+            bindTabEvents();
+            
+            // 启用实时预览功能
+            enableLivePreview();
+        });
+
+        // 关于我们内容管理函数
+        function loadAboutContent(config = null) {
+            const content = config && config.about ? config.about : defaultContent.about;
+            
+            document.getElementById('companyIntro').value = content.companyIntro || defaultContent.about.companyIntro;
+            document.getElementById('foundingYear').value = content.foundingYear || defaultContent.about.foundingYear;
+            document.getElementById('factoryArea').value = content.factoryArea || defaultContent.about.factoryArea;
+            document.getElementById('dailyProduction').value = content.dailyProduction || defaultContent.about.dailyProduction;
+            document.getElementById('testItems').value = content.testItems || defaultContent.about.testItems;
+        }
+
+        async function saveAboutContent() {
+            try {
+                // 先获取当前的完整配置
+                let response = await fetch('/api/config');
+                let config = {};
+                if (response.ok) {
+                    config = await response.json();
+                }
+                
+                // 更新关于内容
+                config.about = {
+                    companyIntro: document.getElementById('companyIntro').value,
+                    foundingYear: document.getElementById('foundingYear').value,
+                    factoryArea: document.getElementById('factoryArea').value,
+                    dailyProduction: document.getElementById('dailyProduction').value,
+                    testItems: document.getElementById('testItems').value
+                };
+                
+                // 保存到后端
+                response = await fetch('/api/config', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(config)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    alert(result.message || '关于我们内容保存成功！');
+                } else {
+                    alert('保存失败: ' + response.statusText);
+                }
+            } catch (error) {
+                console.error('保存关于我们内容出错:', error);
+                alert('保存失败: ' + error.message);
+            }
+        }
+
+        function resetAboutContent() {
+            if (confirm('确定要恢复关于我们默认内容吗？')) {
+                document.getElementById('companyIntro').value = defaultContent.about.companyIntro;
+                document.getElementById('foundingYear').value = defaultContent.about.foundingYear;
+                document.getElementById('factoryArea').value = defaultContent.about.factoryArea;
+                document.getElementById('dailyProduction').value = defaultContent.about.dailyProduction;
+                document.getElementById('testItems').value = defaultContent.about.testItems;
+                alert('关于我们内容已恢复默认');
+            }
+        }
+
+        function previewAboutPage() {
+            saveAboutContent();
+            window.open('about.html', '_blank');
+        }
+
+        // 产品内容管理函数
+        function loadProductsContent(config = null) {
+            const content = config && config.products ? config.products : defaultContent.products;
+            
+            document.getElementById('product1Name').value = content.product1?.name || defaultContent.products.product1.name;
+            document.getElementById('product1Desc').value = content.product1?.description || defaultContent.products.product1.description;
+            document.getElementById('product1Price').value = content.product1?.price || defaultContent.products.product1.price;
+            
+            document.getElementById('product2Name').value = content.product2?.name || defaultContent.products.product2.name;
+            document.getElementById('product2Desc').value = content.product2?.description || defaultContent.products.product2.description;
+            document.getElementById('product2Price').value = content.product2?.price || defaultContent.products.product2.price;
+            
+            document.getElementById('product3Name').value = content.product3?.name || defaultContent.products.product3.name;
+            document.getElementById('product3Desc').value = content.product3?.description || defaultContent.products.product3.description;
+            document.getElementById('product3Price').value = content.product3?.price || defaultContent.products.product3.price;
+            
+            document.getElementById('product4Name').value = content.product4?.name || defaultContent.products.product4.name;
+            document.getElementById('product4Desc').value = content.product4?.description || defaultContent.products.product4.description;
+            document.getElementById('product4Price').value = content.product4?.price || defaultContent.products.product4.price;
+        }
+
+        async function saveProductsContent() {
+            try {
+                // 先获取当前的完整配置
+                let response = await fetch('/api/config');
+                let config = {};
+                if (response.ok) {
+                    config = await response.json();
+                }
+                
+                // 更新产品内容
+                config.products = {
+                    product1: {
+                        name: document.getElementById('product1Name').value,
+                        description: document.getElementById('product1Desc').value,
+                        price: document.getElementById('product1Price').value
+                    },
+                    product2: {
+                        name: document.getElementById('product2Name').value,
+                        description: document.getElementById('product2Desc').value,
+                        price: document.getElementById('product2Price').value
+                    },
+                    product3: {
+                        name: document.getElementById('product3Name').value,
+                        description: document.getElementById('product3Desc').value,
+                        price: document.getElementById('product3Price').value
+                    },
+                    product4: {
+                        name: document.getElementById('product4Name').value,
+                        description: document.getElementById('product4Desc').value,
+                        price: document.getElementById('product4Price').value
+                    }
+                };
+                
+                // 保存到后端
+                response = await fetch('/api/config', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(config)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    alert(result.message || '产品内容保存成功！');
+                } else {
+                    alert('保存失败: ' + response.statusText);
+                }
+            } catch (error) {
+                console.error('保存产品内容出错:', error);
+                alert('保存失败: ' + error.message);
+            }
+        }
+
+        function resetProductsContent() {
+            if (confirm('确定要恢复产品默认内容吗？')) {
+                document.getElementById('product1Name').value = defaultContent.products.product1.name;
+                document.getElementById('product1Desc').value = defaultContent.products.product1.description;
+                document.getElementById('product1Price').value = defaultContent.products.product1.price;
+                document.getElementById('product2Name').value = defaultContent.products.product2.name;
+                document.getElementById('product2Desc').value = defaultContent.products.product2.description;
+                document.getElementById('product2Price').value = defaultContent.products.product2.price;
+                document.getElementById('product3Name').value = defaultContent.products.product3.name;
+                document.getElementById('product3Desc').value = defaultContent.products.product3.description;
+                document.getElementById('product3Price').value = defaultContent.products.product3.price;
+                document.getElementById('product4Name').value = defaultContent.products.product4.name;
+                document.getElementById('product4Desc').value = defaultContent.products.product4.description;
+                document.getElementById('product4Price').value = defaultContent.products.product4.price;
+                alert('产品内容已恢复默认');
+            }
+        }
+
+        function previewProductsPage() {
+            saveProductsContent();
+            window.open('index.html#products', '_blank');
+        }
+
+        // 品质内容管理函数
+        function loadQualityContent(config = null) {
+            const content = config && config.quality ? config.quality : defaultContent.quality;
+            
+            document.getElementById('qualityFeature1').value = content.feature1 || defaultContent.quality.feature1;
+            document.getElementById('qualityDesc1').value = content.desc1 || defaultContent.quality.desc1;
+            document.getElementById('qualityFeature2').value = content.feature2 || defaultContent.quality.feature2;
+            document.getElementById('qualityDesc2').value = content.desc2 || defaultContent.quality.desc2;
+            document.getElementById('qualityFeature3').value = content.feature3 || defaultContent.quality.feature3;
+            document.getElementById('qualityDesc3').value = content.desc3 || defaultContent.quality.desc3;
+            document.getElementById('qualityFeature4').value = content.feature4 || defaultContent.quality.feature4;
+            document.getElementById('qualityDesc4').value = content.desc4 || defaultContent.quality.desc4;
+            document.getElementById('certificationText').value = content.certificationText || defaultContent.quality.certificationText;
+        }
+
+        async function saveQualityContent() {
+            try {
+                // 先获取当前的完整配置
+                let response = await fetch('/api/config');
+                let config = {};
+                if (response.ok) {
+                    config = await response.json();
+                }
+                
+                // 更新品质内容
+                config.quality = {
+                    feature1: document.getElementById('qualityFeature1').value,
+                    desc1: document.getElementById('qualityDesc1').value,
+                    feature2: document.getElementById('qualityFeature2').value,
+                    desc2: document.getElementById('qualityDesc2').value,
+                    feature3: document.getElementById('qualityFeature3').value,
+                    desc3: document.getElementById('qualityDesc3').value,
+                    feature4: document.getElementById('qualityFeature4').value,
+                    desc4: document.getElementById('qualityDesc4').value,
+                    certificationText: document.getElementById('certificationText').value
+                };
+                
+                // 保存到后端
+                response = await fetch('/api/config', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(config)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    alert(result.message || '品质内容保存成功！');
+                } else {
+                    alert('保存失败: ' + response.statusText);
+                }
+            } catch (error) {
+                console.error('保存品质内容出错:', error);
+                alert('保存失败: ' + error.message);
+            }
+        }
+
+        function resetQualityContent() {
+            if (confirm('确定要恢复品质默认内容吗？')) {
+                document.getElementById('qualityFeature1').value = defaultContent.quality.feature1;
+                document.getElementById('qualityDesc1').value = defaultContent.quality.desc1;
+                document.getElementById('qualityFeature2').value = defaultContent.quality.feature2;
+                document.getElementById('qualityDesc2').value = defaultContent.quality.desc2;
+                document.getElementById('qualityFeature3').value = defaultContent.quality.feature3;
+                document.getElementById('qualityDesc3').value = defaultContent.quality.desc3;
+                document.getElementById('qualityFeature4').value = defaultContent.quality.feature4;
+                document.getElementById('qualityDesc4').value = defaultContent.quality.desc4;
+                document.getElementById('certificationText').value = defaultContent.quality.certificationText;
+                alert('品质内容已恢复默认');
+            }
+        }
+
+        function previewQualityPage() {
+            saveQualityContent();
+            window.open('index.html#quality', '_blank');
+        }
+
+        // 联系内容管理函数
+        function loadContactContent(config = null) {
+            const content = config && config.contact ? config.contact : defaultContent.contact;
+            
+            // 页面标题
+            document.getElementById('contactPageTitle').value = content.contactPageTitle || defaultContent.contact.contactPageTitle;
+            document.getElementById('contactPageSubtitle').value = content.contactPageSubtitle || defaultContent.contact.contactPageSubtitle;
+            
+            // 手册标题
+            document.getElementById('handbookTitle').value = content.handbookTitle || defaultContent.contact.handbookTitle;
+            document.getElementById('handbookSubtitle').value = content.handbookSubtitle || defaultContent.contact.handbookSubtitle;
+            
+            // 品牌简介
+            document.getElementById('brandIntro').value = content.brandIntro || defaultContent.contact.brandIntro;
+            
+            // 加盟优势
+            document.getElementById('advantage1Title').value = content.advantage1Title || defaultContent.contact.advantage1Title;
+            document.getElementById('advantage1Desc').value = content.advantage1Desc || defaultContent.contact.advantage1Desc;
+            document.getElementById('advantage2Title').value = content.advantage2Title || defaultContent.contact.advantage2Title;
+            document.getElementById('advantage2Desc').value = content.advantage2Desc || defaultContent.contact.advantage2Desc;
+            document.getElementById('advantage3Title').value = content.advantage3Title || defaultContent.contact.advantage3Title;
+            document.getElementById('advantage3Desc').value = content.advantage3Desc || defaultContent.contact.advantage3Desc;
+            document.getElementById('advantage4Title').value = content.advantage4Title || defaultContent.contact.advantage4Title;
+            document.getElementById('advantage4Desc').value = content.advantage4Desc || defaultContent.contact.advantage4Desc;
+            document.getElementById('advantage5Title').value = content.advantage5Title || defaultContent.contact.advantage5Title;
+            document.getElementById('advantage5Desc').value = content.advantage5Desc || defaultContent.contact.advantage5Desc;
+            
+            // 经销层级
+            document.getElementById('dealerLevel1').value = content.dealerLevel1 || defaultContent.contact.dealerLevel1;
+            document.getElementById('dealerAmount1').value = content.dealerAmount1 || defaultContent.contact.dealerAmount1;
+            document.getElementById('dealerTarget1').value = content.dealerTarget1 || defaultContent.contact.dealerTarget1;
+            document.getElementById('dealerRights1').value = content.dealerRights1 || defaultContent.contact.dealerRights1;
+            document.getElementById('dealerLevel2').value = content.dealerLevel2 || defaultContent.contact.dealerLevel2;
+            document.getElementById('dealerAmount2').value = content.dealerAmount2 || defaultContent.contact.dealerAmount2;
+            document.getElementById('dealerTarget2').value = content.dealerTarget2 || defaultContent.contact.dealerTarget2;
+            document.getElementById('dealerRights2').value = content.dealerRights2 || defaultContent.contact.dealerRights2;
+            document.getElementById('dealerLevel3').value = content.dealerLevel3 || defaultContent.contact.dealerLevel3;
+            document.getElementById('dealerAmount3').value = content.dealerAmount3 || defaultContent.contact.dealerAmount3;
+            document.getElementById('dealerTarget3').value = content.dealerTarget3 || defaultContent.contact.dealerTarget3;
+            document.getElementById('dealerRights3').value = content.dealerRights3 || defaultContent.contact.dealerRights3;
+            document.getElementById('dealerLevel4').value = content.dealerLevel4 || defaultContent.contact.dealerLevel4;
+            document.getElementById('dealerAmount4').value = content.dealerAmount4 || defaultContent.contact.dealerAmount4;
+            document.getElementById('dealerTarget4').value = content.dealerTarget4 || defaultContent.contact.dealerTarget4;
+            document.getElementById('dealerRights4').value = content.dealerRights4 || defaultContent.contact.dealerRights4;
+            
+            // 加盟条件
+            document.getElementById('condition1').value = content.condition1 || defaultContent.contact.condition1;
+            document.getElementById('condition2').value = content.condition2 || defaultContent.contact.condition2;
+            document.getElementById('condition3').value = content.condition3 || defaultContent.contact.condition3;
+            document.getElementById('condition4').value = content.condition4 || defaultContent.contact.condition4;
+            
+            // 联系方式
+            document.getElementById('companyName').value = content.companyName || defaultContent.contact.companyName;
+            document.getElementById('companyAddress').value = content.companyAddress || defaultContent.contact.companyAddress;
+            document.getElementById('contactPhone').value = content.contactPhone || defaultContent.contact.contactPhone;
+            document.getElementById('contactEmail').value = content.contactEmail || defaultContent.contact.contactEmail;
+            
+            // 行动号召
+            document.getElementById('ctaTitle').value = content.ctaTitle || defaultContent.contact.ctaTitle;
+            document.getElementById('ctaSubtitle').value = content.ctaSubtitle || defaultContent.contact.ctaSubtitle;
+        }
+
+        async function saveContactContent() {
+            try {
+                // 先获取当前的完整配置
+                let response = await fetch('/api/config');
+                let config = {};
+                if (response.ok) {
+                    config = await response.json();
+                }
+                
+                // 更新联系内容
+                config.contact = {
+                    contactPageTitle: document.getElementById('contactPageTitle').value,
+                    contactPageSubtitle: document.getElementById('contactPageSubtitle').value,
+                    handbookTitle: document.getElementById('handbookTitle').value,
+                    handbookSubtitle: document.getElementById('handbookSubtitle').value,
+                    brandIntro: document.getElementById('brandIntro').value,
+                    advantage1Title: document.getElementById('advantage1Title').value,
+                    advantage1Desc: document.getElementById('advantage1Desc').value,
+                    advantage2Title: document.getElementById('advantage2Title').value,
+                    advantage2Desc: document.getElementById('advantage2Desc').value,
+                    advantage3Title: document.getElementById('advantage3Title').value,
+                    advantage3Desc: document.getElementById('advantage3Desc').value,
+                    advantage4Title: document.getElementById('advantage4Title').value,
+                    advantage4Desc: document.getElementById('advantage4Desc').value,
+                    advantage5Title: document.getElementById('advantage5Title').value,
+                    advantage5Desc: document.getElementById('advantage5Desc').value,
+                    dealerLevel1: document.getElementById('dealerLevel1').value,
+                    dealerAmount1: document.getElementById('dealerAmount1').value,
+                    dealerTarget1: document.getElementById('dealerTarget1').value,
+                    dealerRights1: document.getElementById('dealerRights1').value,
+                    dealerLevel2: document.getElementById('dealerLevel2').value,
+                    dealerAmount2: document.getElementById('dealerAmount2').value,
+                    dealerTarget2: document.getElementById('dealerTarget2').value,
+                    dealerRights2: document.getElementById('dealerRights2').value,
+                    dealerLevel3: document.getElementById('dealerLevel3').value,
+                    dealerAmount3: document.getElementById('dealerAmount3').value,
+                    dealerTarget3: document.getElementById('dealerTarget3').value,
+                    dealerRights3: document.getElementById('dealerRights3').value,
+                    dealerLevel4: document.getElementById('dealerLevel4').value,
+                    dealerAmount4: document.getElementById('dealerAmount4').value,
+                    dealerTarget4: document.getElementById('dealerTarget4').value,
+                    dealerRights4: document.getElementById('dealerRights4').value,
+                    condition1: document.getElementById('condition1').value,
+                    condition2: document.getElementById('condition2').value,
+                    condition3: document.getElementById('condition3').value,
+                    condition4: document.getElementById('condition4').value,
+                    companyName: document.getElementById('companyName').value,
+                    companyAddress: document.getElementById('companyAddress').value,
+                    contactPhone: document.getElementById('contactPhone').value,
+                    contactEmail: document.getElementById('contactEmail').value,
+                    ctaTitle: document.getElementById('ctaTitle').value,
+                    ctaSubtitle: document.getElementById('ctaSubtitle').value
+                };
+                
+                // 保存到后端
+                response = await fetch('/api/config', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(config)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    alert(result.message || '联系内容保存成功！');
+                } else {
+                    alert('保存失败: ' + response.statusText);
+                }
+            } catch (error) {
+                console.error('保存联系内容出错:', error);
+                alert('保存失败: ' + error.message);
+            }
+        }
+
+        function resetContactContent() {
+            if (confirm('确定要恢复联系默认内容吗？')) {
+                // 页面标题
+                document.getElementById('contactPageTitle').value = defaultContent.contact.contactPageTitle;
+                document.getElementById('contactPageSubtitle').value = defaultContent.contact.contactPageSubtitle;
+                
+                // 手册标题
+                document.getElementById('handbookTitle').value = defaultContent.contact.handbookTitle;
+                document.getElementById('handbookSubtitle').value = defaultContent.contact.handbookSubtitle;
+                
+                // 品牌简介
+                document.getElementById('brandIntro').value = defaultContent.contact.brandIntro;
+                
+                // 加盟优势
+                document.getElementById('advantage1Title').value = defaultContent.contact.advantage1Title;
+                document.getElementById('advantage1Desc').value = defaultContent.contact.advantage1Desc;
+                document.getElementById('advantage2Title').value = defaultContent.contact.advantage2Title;
+                document.getElementById('advantage2Desc').value = defaultContent.contact.advantage2Desc;
+                document.getElementById('advantage3Title').value = defaultContent.contact.advantage3Title;
+                document.getElementById('advantage3Desc').value = defaultContent.contact.advantage3Desc;
+                document.getElementById('advantage4Title').value = defaultContent.contact.advantage4Title;
+                document.getElementById('advantage4Desc').value = defaultContent.contact.advantage4Desc;
+                document.getElementById('advantage5Title').value = defaultContent.contact.advantage5Title;
+                document.getElementById('advantage5Desc').value = defaultContent.contact.advantage5Desc;
+                
+                // 经销层级
+                document.getElementById('dealerLevel1').value = defaultContent.contact.dealerLevel1;
+                document.getElementById('dealerAmount1').value = defaultContent.contact.dealerAmount1;
+                document.getElementById('dealerTarget1').value = defaultContent.contact.dealerTarget1;
+                document.getElementById('dealerRights1').value = defaultContent.contact.dealerRights1;
+                document.getElementById('dealerLevel2').value = defaultContent.contact.dealerLevel2;
+                document.getElementById('dealerAmount2').value = defaultContent.contact.dealerAmount2;
+                document.getElementById('dealerTarget2').value = defaultContent.contact.dealerTarget2;
+                document.getElementById('dealerRights2').value = defaultContent.contact.dealerRights2;
+                document.getElementById('dealerLevel3').value = defaultContent.contact.dealerLevel3;
+                document.getElementById('dealerAmount3').value = defaultContent.contact.dealerAmount3;
+                document.getElementById('dealerTarget3').value = defaultContent.contact.dealerTarget3;
+                document.getElementById('dealerRights3').value = defaultContent.contact.dealerRights3;
+                document.getElementById('dealerLevel4').value = defaultContent.contact.dealerLevel4;
+                document.getElementById('dealerAmount4').value = defaultContent.contact.dealerAmount4;
+                document.getElementById('dealerTarget4').value = defaultContent.contact.dealerTarget4;
+                document.getElementById('dealerRights4').value = defaultContent.contact.dealerRights4;
+                
+                // 加盟条件
+                document.getElementById('condition1').value = defaultContent.contact.condition1;
+                document.getElementById('condition2').value = defaultContent.contact.condition2;
+                document.getElementById('condition3').value = defaultContent.contact.condition3;
+                document.getElementById('condition4').value = defaultContent.contact.condition4;
+                
+                // 联系方式
+                document.getElementById('companyName').value = defaultContent.contact.companyName;
+                document.getElementById('companyAddress').value = defaultContent.contact.companyAddress;
+                document.getElementById('contactPhone').value = defaultContent.contact.contactPhone;
+                document.getElementById('contactEmail').value = defaultContent.contact.contactEmail;
+                
+                // 行动号召
+                document.getElementById('ctaTitle').value = defaultContent.contact.ctaTitle;
+                document.getElementById('ctaSubtitle').value = defaultContent.contact.ctaSubtitle;
+                
+                alert('联系内容已恢复默认');
+            }
+        }
+
+        function previewContactPage() {
+            saveContactContent();
+            window.open('contact.html', '_blank');
+        }
+
+        // 健康饮水内容管理函数
+        function loadHealthContent(config = null) {
+            const content = config && config.health ? config.health : defaultContent.health;
+            
+            document.getElementById('healthTitle').value = content.healthTitle || defaultContent.health.healthTitle;
+            document.getElementById('healthSubtitle').value = content.healthSubtitle || defaultContent.health.healthSubtitle;
+            document.getElementById('strontiumTitle').value = content.strontiumTitle || defaultContent.health.strontiumTitle;
+            document.getElementById('strontiumIntro').value = content.strontiumIntro || defaultContent.health.strontiumIntro;
+            document.getElementById('strontiumBenefit1').value = content.strontiumBenefit1 || defaultContent.health.strontiumBenefit1;
+            document.getElementById('strontiumBenefit2').value = content.strontiumBenefit2 || defaultContent.health.strontiumBenefit2;
+            document.getElementById('strontiumBenefit3').value = content.strontiumBenefit3 || defaultContent.health.strontiumBenefit3;
+            document.getElementById('strontiumBenefit4').value = content.strontiumBenefit4 || defaultContent.health.strontiumBenefit4;
+            document.getElementById('sourceFeatures').value = content.sourceFeatures || defaultContent.health.sourceFeatures;
+        }
+
+        async function saveHealthContent() {
+            try {
+                // 先获取当前的完整配置
+                let response = await fetch('/api/config');
+                let config = {};
+                if (response.ok) {
+                    config = await response.json();
+                }
+                
+                // 更新健康饮水内容
+                config.health = {
+                    healthTitle: document.getElementById('healthTitle').value,
+                    healthSubtitle: document.getElementById('healthSubtitle').value,
+                    strontiumTitle: document.getElementById('strontiumTitle').value,
+                    strontiumIntro: document.getElementById('strontiumIntro').value,
+                    strontiumBenefit1: document.getElementById('strontiumBenefit1').value,
+                    strontiumBenefit2: document.getElementById('strontiumBenefit2').value,
+                    strontiumBenefit3: document.getElementById('strontiumBenefit3').value,
+                    strontiumBenefit4: document.getElementById('strontiumBenefit4').value,
+                    sourceFeatures: document.getElementById('sourceFeatures').value
+                };
+                
+                // 保存到后端
+                response = await fetch('/api/config', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(config)
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    alert(result.message || '健康饮水内容保存成功！');
+                } else {
+                    alert('保存失败: ' + response.statusText);
+                }
+            } catch (error) {
+                console.error('保存健康饮水内容出错:', error);
+                alert('保存失败: ' + error.message);
+            }
+        }
+
+        function resetHealthContent() {
+            if (confirm('确定要恢复健康饮水默认内容吗？')) {
+                document.getElementById('healthTitle').value = defaultContent.health.healthTitle;
+                document.getElementById('healthSubtitle').value = defaultContent.health.healthSubtitle;
+                document.getElementById('strontiumTitle').value = defaultContent.health.strontiumTitle;
+                document.getElementById('strontiumIntro').value = defaultContent.health.strontiumIntro;
+                document.getElementById('strontiumBenefit1').value = defaultContent.health.strontiumBenefit1;
+                document.getElementById('strontiumBenefit2').value = defaultContent.health.strontiumBenefit2;
+                document.getElementById('strontiumBenefit3').value = defaultContent.health.strontiumBenefit3;
+                document.getElementById('strontiumBenefit4').value = defaultContent.health.strontiumBenefit4;
+                document.getElementById('sourceFeatures').value = defaultContent.health.sourceFeatures;
+                alert('健康饮水内容已恢复默认');
+            }
+        }
+
+        function previewHealthPage() {
+            saveHealthContent();
+            window.open('health.html', '_blank');
+        }
+
+        // 图片上传功能
+        function uploadImages() {
+            const fileInput = document.getElementById('imageUpload');
+            const files = fileInput.files;
+            
+            if (files.length === 0) {
+                alert('请选择要上传的图片');
+                return;
+            }
+            
+            // 模拟上传过程
+            alert('图片上传功能已触发！实际项目中需要后端API支持。');
+            console.log('上传的图片文件:', files);
+            fileInput.value = '';
+        }
+
+        // 预览整个网站
+        function previewWebsite() {
+            window.open('index.html', '_blank');
+        }
+
+        // 招聘信息管理函数
+        function loadJoinContent(config = null) {
+            const content = config && config.join ? config.join : defaultContent.join;
+            
+            document.getElementById('joinPageTitle').value = content.joinPageTitle || defaultContent.join.joinPageTitle;
+            document.getElementById('joinPageSubtitle').value = content.joinPageSubtitle || defaultContent.join.joinPageSubtitle;
+            
+            // 电商美工专员
+            document.getElementById('job1Title').value = content.job1Title || defaultContent.join.job1Title;
+            document.getElementById('job1Location').value = content.job1Location || defaultContent.join.job1Location;
+            document.getElementById('job1Salary').value = content.job1Salary || defaultContent.join.job1Salary;
+            document.getElementById('job1Education').value = content.job1Education || defaultContent.join.job1Education;
+            document.getElementById('job1Experience').value = content.job1Experience || defaultContent.join.job1Experience;
+            document.getElementById('job1Responsibilities').value = content.job1Responsibilities || defaultContent.join.job1Responsibilities;
+            document.getElementById('job1Requirements').value = content.job1Requirements || defaultContent.join.job1Requirements;
+            document.getElementById('job1Benefits').value = content.job1Benefits || defaultContent.join.job1Benefits;
+            
+            // 招商专员
+            document.getElementById('job2Title').value = content.job2Title || defaultContent.join.job2Title;
+            document.getElementById('job2Location').value = content.job2Location || defaultContent.join.job2Location;
+            document.getElementById('job2Salary').value = content.job2Salary || defaultContent.join.job2Salary;
+            document.getElementById('job2Education').value = content.job2Education || defaultContent.join.job2Education;
+            document.getElementById('job2Experience').value = content.job2Experience || defaultContent.join.job2Experience;
+            document.getElementById('job2Responsibilities').value = content.job2Responsibilities || defaultContent.join.job2Responsibilities;
+            document.getElementById('job2Requirements').value = content.job2Requirements || defaultContent.join.job2Requirements;
+            document.getElementById('job2Benefits').value = content.job2Benefits || defaultContent.join.job2Benefits;
+        }
+
+        async function saveJoinContent() {
+            try {
+                const config = await fetch('/api/config').then(r => r.json());
+                
+                config.join = {
+                    joinPageTitle: document.getElementById('joinPageTitle').value,
+                    joinPageSubtitle: document.getElementById('joinPageSubtitle').value,
+                    
+                    job1Title: document.getElementById('job1Title').value,
+                    job1Location: document.getElementById('job1Location').value,
+                    job1Salary: document.getElementById('job1Salary').value,
+                    job1Education: document.getElementById('job1Education').value,
+                    job1Experience: document.getElementById('job1Experience').value,
+                    job1Responsibilities: document.getElementById('job1Responsibilities').value,
+                    job1Requirements: document.getElementById('job1Requirements').value,
+                    job1Benefits: document.getElementById('job1Benefits').value,
+                    
+                    job2Title: document.getElementById('job2Title').value,
+                    job2Location: document.getElementById('job2Location').value,
+                    job2Salary: document.getElementById('job2Salary').value,
+                    job2Education: document.getElementById('job2Education').value,
+                    job2Experience: document.getElementById('job2Experience').value,
+                    job2Responsibilities: document.getElementById('job2Responsibilities').value,
+                    job2Requirements: document.getElementById('job2Requirements').value,
+                    job2Benefits: document.getElementById('job2Benefits').value
+                };
+                
+                const response = await fetch('/api/config', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(config)
+                });
+                
+                if (response.ok) {
+                    showMessage('招聘信息保存成功！', 'success');
+                } else {
+                    showMessage('保存失败，请重试', 'error');
+                }
+            } catch (error) {
+                console.error('保存招聘信息失败:', error);
+                showMessage('保存失败，请检查网络连接', 'error');
+            }
+        }
+
+        function resetJoinContent() {
+            if (confirm('确定要恢复默认的招聘信息吗？这将丢失所有未保存的修改。')) {
+                document.getElementById('joinPageTitle').value = defaultContent.join.joinPageTitle;
+                document.getElementById('joinPageSubtitle').value = defaultContent.join.joinPageSubtitle;
+                
+                document.getElementById('job1Title').value = defaultContent.join.job1Title;
+                document.getElementById('job1Location').value = defaultContent.join.job1Location;
+                document.getElementById('job1Salary').value = defaultContent.join.job1Salary;
+                document.getElementById('job1Education').value = defaultContent.join.job1Education;
+                document.getElementById('job1Experience').value = defaultContent.join.job1Experience;
+                document.getElementById('job1Responsibilities').value = defaultContent.join.job1Responsibilities;
+                document.getElementById('job1Requirements').value = defaultContent.join.job1Requirements;
+                document.getElementById('job1Benefits').value = defaultContent.join.job1Benefits;
+                
+                document.getElementById('job2Title').value = defaultContent.join.job2Title;
+                document.getElementById('job2Location').value = defaultContent.join.job2Location;
+                document.getElementById('job2Salary').value = defaultContent.join.job2Salary;
+                document.getElementById('job2Education').value = defaultContent.join.job2Education;
+                document.getElementById('job2Experience').value = defaultContent.join.job2Experience;
+                document.getElementById('job2Responsibilities').value = defaultContent.join.job2Responsibilities;
+                document.getElementById('job2Requirements').value = defaultContent.join.job2Requirements;
+                document.getElementById('job2Benefits').value = defaultContent.join.job2Benefits;
+                
+                showMessage('招聘信息已恢复默认', 'success');
+            }
+        }
+
+        function previewJoinPage() {
+            window.open('join.html', '_blank');
+        }
+
+        // 导出所有内容
+        function exportAllContent() {
+            const allContent = {
+                home: JSON.parse(localStorage.getItem('homeContent') || JSON.stringify(defaultContent.home)),
+                about: JSON.parse(localStorage.getItem('aboutContent') || JSON.stringify(defaultContent.about)),
+                products: JSON.parse(localStorage.getItem('productsContent') || JSON.stringify(defaultContent.products)),
+                quality: JSON.parse(localStorage.getItem('qualityContent') || JSON.stringify(defaultContent.quality)),
+                contact: JSON.parse(localStorage.getItem('contactContent') || JSON.stringify(defaultContent.contact)),
+                health: JSON.parse(localStorage.getItem('healthContent') || JSON.stringify(defaultContent.health))
+            };
+            
+            const blob = new Blob([JSON.stringify(allContent, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'website-content-backup.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            alert('所有内容已导出为JSON文件');
+        }
+    </script>
+</body>
+</html>
