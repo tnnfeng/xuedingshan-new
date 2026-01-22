@@ -1,0 +1,7 @@
+<svg width="300" height="400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#e0f7fa"/>
+  <text x="50%" y="40%" font-family="Arial" font-size="24" fill="#333333" text-anchor="middle">气泡矿泉水</text>
+  <text x="50%" y="50%" font-family="Arial" font-size="16" fill="#666666" text-anchor="middle">天然气泡，清爽口感</text>
+  <circle cx="50%" cy="70%" r="40" fill="#ffffff" stroke="#00bcd4" stroke-width="3" />
+  <text x="50%" y="70%" font-family="Arial" font-size="14" fill="#00bcd4" text-anchor="middle" dy=".3em">气泡</text>
+</svg>
