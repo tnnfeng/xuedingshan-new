@@ -1,28 +1,36 @@
-/* 雪顶山矿泉 - 依云风格配色方案 */
+﻿/* 雪顶山矿泉 - 依云蓝主题配色方案 */
 :root {
-    /* 主色调 - 依云蓝 */
-    --evian-blue: #0077b6;
-    --evian-light-blue: #00b4d8;
-    --evian-dark-blue: #023e8a;
+    /* 主色调系 - 依云蓝系列 */
+    --evian-blue: #007AC1;          /* 依云品牌蓝 - 十六进制：007AC1, RGB：0, 122, 193 */
+    --evian-light-blue: #4AB8E8;    /* 依云浅蓝色 - 协调配色 */
+    --evian-dark-blue: #025AA5;     /* 依云深蓝色 - 协调配色 */
+    --evian-accent: #0098D4;        /* 依云强调色 - 协调配色 */
     
-    /* 辅助色 */
+    /* 中性色 */
     --pure-white: #ffffff;
     --snow-white: #f8f9fa;
     --ice-gray: #e9ecef;
     --mountain-gray: #6c757d;
-    --glacier-blue: #caf0f8;
+    --light-gray: #dee2e6;
     
     /* 渐变 */
+    --gradient-primary: linear-gradient(135deg, var(--evian-blue), var(--evian-accent));
     --gradient-blue: linear-gradient(135deg, var(--evian-blue), var(--evian-light-blue));
-    --gradient-light: linear-gradient(135deg, var(--glacier-blue), var(--pure-white));
+    --gradient-light: linear-gradient(135deg, #f0f8ff, var(--pure-white));
+    --gradient-dark: linear-gradient(135deg, var(--evian-dark-blue), var(--evian-blue));
     
     /* 字体 */
     --font-family: 'Noto Sans SC', sans-serif;
     
     /* 阴影 */
-    --shadow-light: 0 4px 6px rgba(0, 119, 182, 0.1);
-    --shadow-medium: 0 8px 25px rgba(0, 119, 182, 0.15);
-    --shadow-heavy: 0 15px 40px rgba(0, 119, 182, 0.2);
+    --shadow-light: 0 2px 8px rgba(0, 122, 193, 0.08);
+    --shadow-medium: 0 4px 12px rgba(0, 122, 193, 0.12);
+    --shadow-heavy: 0 8px 24px rgba(0, 122, 193, 0.16);
+    
+    /* 间距 */
+    --section-padding: 80px 0;
+    --container-padding: 0 20px;
+    --border-radius: 12px;
 }
 
 * {
@@ -46,7 +54,7 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 60px;
 }
 
 /* 头部导航 */
@@ -55,53 +63,70 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    background: var(--pure-white);
     z-index: 1000;
     box-shadow: var(--shadow-light);
+    border-bottom: 1px solid var(--light-gray);
 }
 
 .nav-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding: 0.75rem 2rem;
+    padding: 1rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
-    gap: 3rem;
 }
 
 .logo {
     display: flex;
     align-items: center;
-    margin-right: auto;
 }
 
 .logo-image {
-    height: 70px;
+    height: 50px;
     width: auto;
-    max-width: 300px;
     object-fit: contain;
 }
 
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 2rem;
-    margin: 0 auto;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
 }
 
 .nav-menu a {
     text-decoration: none;
     color: var(--mountain-gray);
     font-weight: 500;
-    -webkit-transition: color 0.3s ease;
-    transition: color 0.3s ease;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
     position: relative;
+    padding: 0.5rem 0;
+    white-space: nowrap;
 }
 
 .nav-menu a:hover {
     color: var(--evian-blue);
+}
+
+.nav-menu a.active {
+    color: var(--evian-blue);
+    font-weight: 600;
+}
+
+.nav-menu a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--evian-blue);
+    border-radius: 1px;
 }
 
 .nav-menu a::after {
@@ -131,7 +156,7 @@ body {
 }
 
 .nav-menu li.has-submenu > a::before {
-    content: '▼';
+    content: '鈻?;
     font-size: 0.6em;
     position: absolute;
     right: 0.8rem;
@@ -217,10 +242,21 @@ body {
     min-height: 100vh;
     display: flex;
     align-items: center;
-    padding: 0 2rem;
-    background: var(--gradient-light);
+    padding: 120px 2rem 80px;
+    background: var(--gradient-primary);
     position: relative;
     overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%230077b6;stop-opacity:0.8" /><stop offset="100%" style="stop-color:%230096c7;stop-opacity:0.9" /></linearGradient></defs><path d="M0,0 L1200,0 L1200,800 L0,800 Z" fill="url(%23bg)"/></svg>') no-repeat center/cover;
+    opacity: 0.95;
 }
 
 .hero-container {
@@ -231,49 +267,71 @@ body {
     gap: 4rem;
     align-items: center;
     width: 100%;
-}
-
-.hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 50%;
-    height: 100%;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%230077b6;stop-opacity:0.1" /><stop offset="100%" style="stop-color:%2300b4d8;stop-opacity:0.05" /></linearGradient></defs><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="url(%23grad)"/></svg>') no-repeat;
-    background-size: cover;
-}
-
-.hero-content {
+    position: relative;
     z-index: 2;
 }
 
+.hero-content {
+    color: var(--pure-white);
+}
+
 .hero-title {
-    font-size: 3.5rem;
+    font-size: 3.2rem;
     font-weight: 700;
-    color: var(--evian-dark-blue);
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .hero-subtitle {
-    font-size: 1.3rem;
-    color: var(--mountain-gray);
-    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
     font-weight: 400;
+    opacity: 0.95;
 }
 
 .hero-slogan {
     font-size: 1.1rem;
-    color: var(--evian-blue);
     margin-bottom: 2.5rem;
     font-weight: 500;
-    font-style: italic;
+    opacity: 0.9;
+    max-width: 500px;
+}
+
+.hero-features {
+    display: flex;
+    gap: 1.5rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 0.8rem 1.2rem;
+    border-radius: var(--border-radius);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.feature-item i {
+    color: var(--pure-white);
+    font-size: 1.3rem;
+}
+
+.feature-item span {
+    font-weight: 500;
+    color: var(--pure-white);
+    font-size: 0.95rem;
 }
 
 .hero-buttons {
     display: flex;
     gap: 1rem;
+    margin-top: 2rem;
 }
 
 .cta-button {
@@ -283,29 +341,25 @@ body {
     gap: 0.5rem;
     padding: 1rem 2rem;
     font-size: 1.1rem;
-    font-weight: 500;
-    border-radius: 50px;
+    font-weight: 600;
+    border-radius: var(--border-radius);
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
     border: none;
     text-decoration: none;
     text-align: center;
 }
 
-.cta-button .fas {
-    font-size: 1.2rem;
-}
-
 .cta-button.primary {
-    background: var(--gradient-blue);
-    color: white;
+    background: var(--pure-white);
+    color: var(--evian-blue);
     box-shadow: var(--shadow-medium);
 }
 
 .cta-button.secondary {
     background: transparent;
-    color: var(--evian-blue);
-    border: 2px solid var(--evian-blue);
+    color: var(--pure-white);
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .cta-button:hover {
@@ -313,12 +367,19 @@ body {
     box-shadow: var(--shadow-heavy);
 }
 
+.cta-button.primary:hover {
+    background: var(--snow-white);
+}
+
+.cta-button.secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--pure-white);
+}
+
 .hero-image {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2;
 }
 
 .factory-gallery {
@@ -368,7 +429,7 @@ body {
 /* 点击缩略图切换主图效果 */
 .factory-thumb.active {
     border-color: var(--evian-blue);
-    box-shadow: 0 0 0 3px rgba(0, 119, 182, 0.3);
+    box-shadow: 0 0 0 3px rgba(0, 122, 193, 0.3);
     transform: scale(1.03);
 }
 
@@ -498,11 +559,11 @@ body {
 }
 
 .product-3 {
-    background: linear-gradient(135deg, #90e0ef, #ffffff);
+    background: linear-gradient(135deg, #A0E8FF, #ffffff);
 }
 
 .product-4 {
-    background: linear-gradient(135deg, #00b4d8, #ffffff);
+    background: linear-gradient(135deg, #00B8E6, #ffffff);
 }
 
 .product-card h3 {
@@ -533,14 +594,36 @@ body {
 }
 
 .quality-features {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.feature-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    justify-content: center;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .feature {
+    background: var(--pure-white);
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 122, 193, 0.1);
     text-align: center;
-    padding: 2rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 122, 193, 0.1);
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 122, 193, 0.15);
+    border-color: rgba(0, 122, 193, 0.3);
 }
 
 .feature-icon {
@@ -550,13 +633,15 @@ body {
 
 .feature h3 {
     color: var(--evian-blue);
-    margin-bottom: 0.5rem;
-    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
 }
 
 .feature p {
     color: var(--mountain-gray);
     line-height: 1.6;
+    font-size: 0.95rem;
 }
 
 /* 认证展示样式 */
@@ -631,7 +716,7 @@ body {
 }
 
 .certification-benefits li:before {
-    content: '✓';
+    content: '鉁?;
     color: #4caf50;
     font-weight: bold;
     margin-right: 0.3rem;
@@ -704,7 +789,7 @@ body {
     padding: 2rem;
     background: var(--snow-white);
     border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 119, 182, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 122, 193, 0.1);
 }
 
 .wechat-consultation h3 {
@@ -748,54 +833,1322 @@ body {
     font-size: 1.2rem;
 }
 
-/* 页脚 */
-.footer {
-    background: linear-gradient(135deg, var(--evian-blue), var(--evian-light-blue));
+/* 新增样式 - 英雄区域特性展示 */
+.hero-features {
+    display: flex;
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+    flex-wrap: wrap;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: linear-gradient(135deg, 
+        rgba(0, 122, 193, 0.25), 
+        rgba(72, 202, 228, 0.15));
+    padding: 1rem 1.5rem;
+    border-radius: 16px;
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(72, 202, 228, 0.35);
+    box-shadow: 
+        0 4px 20px rgba(0, 122, 193, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.4), 
+        transparent);
+}
+
+.feature-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 
+        0 8px 25px rgba(0, 122, 193, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    border-color: rgba(72, 202, 228, 0.5);
+    background: linear-gradient(135deg, 
+        rgba(0, 122, 193, 0.3), 
+        rgba(72, 202, 228, 0.2));
+}
+
+.feature-item i {
+    color: var(--pure-white);
+    font-size: 1.4rem;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+    transition: transform 0.3s ease;
+}
+
+.feature-item:hover i {
+    transform: scale(1.1);
+}
+
+.feature-item span {
+    font-weight: 600;
+    color: var(--pure-white);
+    font-size: 1rem;
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.water-bottle-showcase {
+    position: relative;
+    text-align: center;
+}
+
+.main-product {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 122, 193, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.main-product:hover {
+    transform: translateY(-5px);
+}
+
+.product-badges {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.badge {
+    background: var(--gradient-blue);
     color: white;
-    padding: 2rem 0 0.5rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    box-shadow: 0 3px 10px rgba(0, 122, 193, 0.3);
+}
+
+/* 内容区域通用样式 */
+.content-section {
+    padding: var(--section-padding);
+    background: var(--gradient-primary);
+    color: var(--pure-white);
+}
+
+.content-section.light {
+    background: var(--gradient-light);
+    color: var(--mountain-gray);
+}
+
+.content-section.white {
+    background: var(--pure-white);
+    color: var(--mountain-gray);
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    color: var(--evian-dark-blue);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: var(--mountain-gray);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* 水源地区域样式 */
+.source {
+    padding: var(--section-padding);
+    background: var(--snow-white);
+}
+
+.source-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.source-left,
+.source-right {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.feature-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.feature-card {
+    background: var(--pure-white);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 122, 193, 0.12);
+    border: 2px solid rgba(0, 122, 193, 0.08);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--evian-blue), var(--evian-light-blue));
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 122, 193, 0.2);
+    border-color: rgba(0, 122, 193, 0.2);
+}
+
+.feature-card .feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+    text-align: center;
+}
+
+.feature-card h3 {
+    color: var(--evian-blue);
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.feature-card p {
+    color: var(--mountain-gray);
+    line-height: 1.7;
+    font-size: 1rem;
+    text-align: center;
+    margin: 0;
+}
+
+.water-visual {
+    background: linear-gradient(135deg, rgba(0, 122, 193, 0.1), rgba(72, 184, 232, 0.05));
+    padding: 2.5rem 2rem;
+    border-radius: 16px;
+    text-align: center;
+    border: 2px solid rgba(0, 122, 193, 0.1);
+}
+
+.visual-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: var(--evian-blue);
+}
+
+.visual-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--evian-blue);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.source-features {
+    display: grid;
+    gap: 2rem;
+}
+
+.feature-card {
+    background: var(--pure-white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-light);
+    transition: all 0.3s ease;
+    border: 1px solid var(--light-gray);
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+    border-color: var(--evian-light-blue);
+}
+
+.feature-card i {
+    font-size: 2.5rem;
+    color: var(--evian-blue);
+    margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+    color: var(--evian-dark-blue);
+    margin-bottom: 0.8rem;
+    font-size: 1.3rem;
+}
+
+.feature-card p {
+    color: var(--mountain-gray);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.source-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.source-img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-medium);
+}
+
+.gallery-thumbs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.thumb-img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.thumb-img:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-light);
+}
+
+/* 品牌故事区域优化 */
+.about {
+    padding: 100px 0;
+    background: var(--pure-white);
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.about-text h3 {
+    color: var(--evian-dark-blue);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.about-text p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: var(--mountain-gray);
+}
+
+.certification {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding: 1rem;
+    background: var(--snow-white);
+    border-radius: 10px;
+    border-left: 4px solid var(--evian-blue);
+}
+
+.cert-img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.factory-showcase {
+    position: relative;
+}
+
+.factory-img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: var(--shadow-medium);
+}
+
+.factory-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 122, 193, 0.9);
+    color: white;
+    padding: 1rem;
+    border-radius: 0 0 15px 15px;
+}
+
+.factory-info h4 {
+    margin-bottom: 0.5rem;
+}
+
+/* 产品展示区域优化 */
+.products {
+    padding: var(--section-padding);
+    background: var(--pure-white);
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.product-card {
+    background: var(--pure-white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-light);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--light-gray);
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-heavy);
+    border-color: var(--evian-light-blue);
+}
+
+.product-image {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+    background: var(--gradient-light);
+}
+
+.product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+    padding: 1rem;
+}
+
+.product-card:hover .product-img {
+    transform: scale(1.08);
+}
+
+.product-label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--gradient-primary);
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    box-shadow: var(--shadow-medium);
+}
+
+.product-info {
+    padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-info h3 {
+    color: var(--evian-dark-blue);
+    margin-bottom: 0.8rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.product-desc {
+    color: var(--mountain-gray);
+    margin-bottom: 1.2rem;
+    line-height: 1.6;
+    flex-grow: 1;
+    font-size: 0.95rem;
+}
+
+.product-specs {
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+}
+
+.spec {
+    background: var(--snow-white);
+    color: var(--evian-blue);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid var(--light-gray);
+}
+
+.product-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--evian-blue);
+    margin-bottom: 1.2rem;
+}
+
+.product-btn {
+    background: var(--gradient-primary);
+    color: white;
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.product-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+    background: var(--gradient-dark);
+}
+
+/* 页脚优化 */
+.footer {
+    background: var(--gradient-blue);
+    color: white;
+    padding: 3rem 0 1rem;
+    margin-top: 4rem;
 }
 
 .footer-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.footer-brand {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.footer-logo {
+    width: 120px;
+    height: auto;
+}
+
+.brand-slogan {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    line-height: 1.6;
+    max-width: 300px;
+}
+
+.social-links {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.social-link {
+    display: flex;
     align-items: center;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-}
-
-.footer-nav {
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-}
-
-.footer-nav a {
-    cursor: pointer;
-    transition: color 0.3s ease;
-    font-size: 0.95rem;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: white;
     text-decoration: none;
-    color: inherit;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
 }
 
-.footer-nav a:hover {
-    color: var(--evian-light-blue);
+.social-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
 }
 
 .footer-contact {
-    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-.service-hotline {
-    font-size: 1.1rem;
+.footer-contact h4 {
+    font-size: 1.2rem;
     font-weight: 600;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.5rem;
 }
 
-.follow-us {
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.contact-detail {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+.contact-detail i {
+    width: 20px;
+    text-align: center;
+    color: var(--evian-light-blue);
+}
+
+.footer-wechat {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-wechat h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.qr-image {
+    width: 140px;
+    height: 140px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-medium);
+    border: 3px solid rgba(255, 255, 255, 0.1);
+}
+
+.qr-desc {
     font-size: 0.9rem;
     opacity: 0.8;
-    margin-bottom: 0.3rem;
+    max-width: 200px;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 2rem;
+    max-width: 1200px;
+    margin: 2rem auto 0;
+    padding: 0 2rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+    text-align: center;
+}
+
+.footer-links {
+    display: flex;
+    gap: 1.5rem;
+    margin-left: 2rem;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+/* 页面标题区域样式 */
+.page-hero {
+    padding: 140px 0 80px;
+    background: var(--gradient-primary);
+    color: var(--pure-white);
+    text-align: center;
+    position: relative;
+}
+
+.page-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%230077b6;stop-opacity:0.8" /><stop offset="100%" style="stop-color:%230096c7;stop-opacity:0.9" /></linearGradient></defs><path d="M0,0 L1200,0 L1200,600 L0,600 Z" fill="url(%23bg)"/></svg>') no-repeat center/cover;
+    opacity: 0.95;
+}
+
+.page-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.page-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.page-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 3rem;
+    opacity: 0.9;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    width: 100%;
+}
+
+.stat-item {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 1.5rem 1rem;
+    border-radius: var(--border-radius);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* 公司简介区域 */
+.company-intro {
+    padding: var(--section-padding);
+    background: var(--pure-white);
+}
+
+.intro-content-centered {
+    max-width: 100%; /* 移除宽度限制，让图片能利用父容器宽度 */
+    margin: 0 auto;
+    text-align: center;
+}
+
+.intro-text-centered {
+    text-align: center;
+    margin-bottom: 3rem;
+    max-width: 800px; /* 限制文字区域宽度，与图片协调 */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.intro-text-centered h2 {
+    color: var(--evian-dark-blue);
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.intro-highlight {
+    color: var(--evian-dark-blue);
+    font-size: 1.3rem;
+    line-height: 1.6;
+    text-align: center;
+    font-weight: 600;
+    background: linear-gradient(135deg, rgba(0, 122, 193, 0.1), rgba(74, 184, 232, 0.05));
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--evian-blue);
+    margin: 0 auto 1.5rem;
+    max-width: 800px;
+}
+
+.intro-highlight strong {
+    color: var(--evian-blue);
+    font-weight: 700;
+}
+
+.intro-text-centered p {
+    color: var(--mountain-gray);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+.intro-text-centered p strong {
+    color: var(--evian-blue);
+    font-weight: 600;
+}
+
+.intro-images-centered {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    max-width: none; /* 彻底移除任何宽度限制 */
+}
+
+.image-grid-centered {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    width: 100vw; /* 使用视口宽度，占据整个屏幕 */
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+.image-grid-centered .image-item {
+    width: 100%;
+}
+
+.image-grid-centered .image-item img {
+    width: 100%;
+    height: 500px; /* 进一步增加图片高度 */
+    object-fit: cover;
+    display: block;
+    border-radius: 0;
+}
+
+.intro-text h2 {
+    color: var(--evian-dark-blue);
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.intro-text p {
+    color: var(--mountain-gray);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+}
+
+/* 右侧图片布局样式 */
+.intro-images {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-self: start; /* 确保顶部对齐 */
+    margin-top: 0; /* 确保与特质卡片顶部对齐 */
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.image-item {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 122, 193, 0.1);
+    transition: all 0.3s ease;
+}
+
+.image-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 122, 193, 0.15);
+}
+
+.image-item img {
+    width: 100%;
+    height: auto; /* 移除固定高度限制 */
+    object-fit: cover;
+    display: block;
+}
+
+.image-caption {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    color: var(--mountain-gray);
+    font-style: italic;
+    line-height: 1.4;
+    text-align: center;
+}
+
+.company-highlights {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.highlight-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: var(--snow-white);
+    padding: 1rem 1.5rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--light-gray);
+}
+
+.highlight-icon {
+    font-size: 1.5rem;
+}
+
+/* 健康饮水页面样式 */
+.health-content {
+    padding: var(--section-padding);
+    background: var(--pure-white);
+}
+
+.health-section {
+    max-width: 1000px;
+    margin: 0 auto 4rem;
+}
+
+.health-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.health-header h2 {
+    color: var(--evian-dark-blue);
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.health-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--gradient-primary);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+}
+
+.health-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.health-item {
+    background: var(--snow-white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--light-gray);
+    transition: all 0.3s ease;
+}
+
+.health-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+    border-color: var(--evian-light-blue);
+}
+
+.health-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.health-item h3 {
+    color: var(--evian-blue);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.health-item p {
+    color: var(--mountain-gray);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.health-item ul {
+    list-style: none;
+    padding: 0;
+}
+
+.health-item li {
+    color: var(--mountain-gray);
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.health-item li::before {
+    content: '鉁?;
+    color: var(--evian-blue);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+}
+
+/* 联系我们页面样式 */
+.contact-page {
+    padding: var(--section-padding);
+    background: var(--pure-white);
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.contact-info-card {
+    background: var(--snow-white);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--light-gray);
+    text-align: center;
+}
+
+.contact-info-card h3 {
+    color: var(--evian-blue);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.contact-info-card p {
+    color: var(--mountain-gray);
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+
+.contact-info-card .contact-detail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.contact-info-card .contact-detail i {
+    color: var(--evian-blue);
+    width: 20px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .hero-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-features {
+        justify-content: center;
+    }
+    
+    .source-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .page-title {
+        font-size: 2.2rem;
+    }
+    
+    .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .company-highlights {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    /* 品牌故事页面移动端优化 */
+    .stat-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .intro-content-centered {
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+    
+    .intro-text-centered {
+        margin-bottom: 2rem;
+    }
+    
+    .image-grid-centered {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .image-grid-centered .image-item img {
+        height: 250px;
+        border-radius: 0; /* 移动端也去掉圆角 */
+    }
+    
+    .image-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .image-item img {
+        height: 200px;
+    }
+    
+    /* 水源地页面移动端优化 */
+    .source-features {
+        gap: 1.5rem;
+    }
+    
+    .feature-row {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .feature {
+        padding: 1.5rem 1rem;
+    }
+    
+    .feature-icon {
+        font-size: 2rem;
+    }
+    
+    .source-details {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .detail-item {
+        padding: 1.5rem 1rem;
+    }
+    
+    .detail-icon {
+        font-size: 2rem;
+    }
+    
+    /* 水源地实景照片移动端优化 */
+    .scenery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .scenery-placeholder {
+        padding: 1.5rem 1rem;
+        min-height: 150px;
+    }
+    
+    .placeholder-icon {
+        font-size: 2rem;
+    }
+    
+    .scenery-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* 水源地页面新布局移动端优化 */
+    .source-layout {
+        gap: 2rem;
+    }
+    
+    .source-cards {
+        padding: 2rem 1.5rem;
+        max-width: 100%;
+    }
+    
+    .card-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .card-item {
+        padding: 2rem 1.5rem;
+    }
+    
+    .card-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .card-item h3 {
+        font-size: 1.2rem;
+    }
+    
+    .card-item p {
+        font-size: 0.9rem;
+    }
+    
+    /* 生态环境卡片移动端优化 */
+    .ecology-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    .ecology-card .card-icon {
+        font-size: 3rem;
+    }
+    
+    .ecology-card h3 {
+        font-size: 1.5rem;
+    }
+    
+    .ecology-card p {
+        font-size: 1rem;
+    }
+    
+    .ecology-features {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .feature-item {
+        justify-content: center;
+    }
+    
+    /* 太行山图片移动端优化 */
+    .mountain-image {
+        padding: 3rem 1.5rem;
+        min-height: 250px;
+    }
+    
+    .placeholder-icon-large {
+        font-size: 4rem;
+    }
+    
+    .image-placeholder-large p {
+        font-size: 1.5rem;
+    }
+    
+    .mountain-description {
+        padding: 2rem 1.5rem;
+    }
+    
+    .mountain-description h3 {
+        font-size: 1.5rem;
+    }
+    
+    .mountain-description p {
+        font-size: 1rem;
+    }
+    
+    /* 其他卡片移动端优化 */
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .source-images {
+        padding: 2rem 1.5rem;
+        max-width: 100%;
+    }
+    
+    .images-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    
+    .image-item {
+        max-width: 100%;
+    }
+    
+    .image-placeholder {
+        padding: 1.5rem 1rem;
+        min-height: 140px;
+    }
+    
+    .placeholder-icon {
+        font-size: 2rem;
+    }
+    
+    .images-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
 }
 
 .wechat-qr {
@@ -883,7 +2236,7 @@ img {
 
 /* 响应式设计 */
 @media (max-width: 768px) {
-    /* 为页面内容添加上边距，避免被固定导航栏覆盖 */
+    /* 为页面内容添加上边距，避免被固定导航栏遮挡 */
     body {
         padding-top: 80px; /* 导航栏高度 + 适当间距 */
     }
@@ -1262,28 +2615,95 @@ img {
 }
 
 .features-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.feature-row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
 }
 
 .feature-item {
     background: var(--pure-white);
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: var(--shadow-light);
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 122, 193, 0.1);
     text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 122, 193, 0.1);
+}
+
+.feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 122, 193, 0.15);
+    border-color: rgba(0, 122, 193, 0.3);
 }
 
 .feature-item h3 {
     color: var(--evian-blue);
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     margin-bottom: 1rem;
+    font-weight: 600;
 }
 
 .feature-item p {
     color: var(--mountain-gray);
     line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* 水源保护对称布局样式 */
+.protection-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.protection-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.protection-item {
+    background: var(--pure-white);
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 122, 193, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 122, 193, 0.1);
+}
+
+.protection-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 122, 193, 0.15);
+    border-color: rgba(0, 122, 193, 0.3);
+}
+
+.protection-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.protection-item h3 {
+    color: var(--evian-blue);
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.protection-item p {
+    color: var(--mountain-gray);
+    line-height: 1.6;
+    font-size: 0.95rem;
 }
 
 .production-capacity {
@@ -1294,8 +2714,9 @@ img {
 .production-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
+    gap: 3rem;
+    align-items: start;
+    align-content: start;
 }
 
 .production-image img {
@@ -1321,8 +2742,14 @@ img {
 .quality-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: center;
+    gap: 1.5rem; /* 进一步减少间距 */
+    align-items: start;
+    max-width: 1000px; /* 限制内容区域最大宽度 */
+    margin: 0 auto;
+}
+
+.quality-text {
+    padding-right: 1rem; /* 文字区域右侧内边距 */
 }
 
 .quality-text p {
@@ -1334,10 +2761,12 @@ img {
 
 .quality-image img {
     width: 100%;
-    max-width: 300px;
+    max-width: 400px; /* 增加图片最大宽度 */
     height: auto;
     border-radius: 10px;
     box-shadow: var(--shadow-medium);
+    margin: 0 auto; /* 图片居中显示 */
+    display: block;
 }
 
 .company-vision {
@@ -1486,7 +2915,7 @@ img {
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(transparent, rgba(0, 119, 182, 0.8));
+    background: linear-gradient(transparent, rgba(0, 122, 193, 0.8));
     color: white;
     padding: 2rem;
     border-radius: 0 0 10px 10px;
@@ -1498,21 +2927,355 @@ img {
 
 .production-details {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: 1fr;
     gap: 1.5rem;
-    margin-bottom: 2rem;
+    background: var(--pure-white);
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 122, 193, 0.1);
+    border: 1px solid rgba(0, 122, 193, 0.1);
+    height: fit-content;
+}
+
+.production-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.production-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-self: start;
 }
 
 .detail-item {
-    background: var(--snow-white);
-    padding: 1.5rem;
-    border-radius: 8px;
+    background: var(--pure-white);
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 122, 193, 0.1);
     text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 122, 193, 0.1);
+}
+
+.detail-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 122, 193, 0.15);
+    border-color: rgba(0, 122, 193, 0.3);
 }
 
 .detail-item h4 {
     color: var(--evian-blue);
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.detail-item p {
+    color: var(--mountain-gray);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.detail-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.source-features {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.source-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+/* 水源地页面新布局样式 - 生态环境版 */
+.source-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+/* 卡片区域 - 生态环境布局 */
+.source-cards {
+    background: var(--snow-white);
+    padding: 3rem;
+    border-radius: 16px;
+    box-shadow: 0 6px 30px rgba(0, 122, 193, 0.1);
+    width: 100%;
+    max-width: 1400px;
+}
+
+/* 生态环境卡片 - 单独一列 */
+.ecology-section {
+    margin-bottom: 3rem;
+}
+
+.ecology-card {
+    background: linear-gradient(135deg, var(--pure-white) 0%, #f0f9ff 100%);
+    padding: 3rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(34, 139, 34, 0.15);
+    border: 1px solid rgba(34, 139, 34, 0.2);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.ecology-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 50px rgba(34, 139, 34, 0.2);
+}
+
+.ecology-card .card-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    color: #228B22;
+}
+
+.ecology-card h3 {
+    color: #228B22;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.ecology-card p {
+    color: var(--mountain-gray);
+    line-height: 1.7;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+}
+
+.ecology-features {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(0, 122, 193, 0.9); /* 深蓝色背景，确保文字清晰 */
+    color: white;
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+}
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #228B22;
+}
+
+.feature-icon {
+    font-size: 1.2rem;
+}
+
+/* 其他卡片区域 */
+.other-cards {
+    margin-top: 2rem;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+/* 统一使用与水质特点区域相同的样式 */
+.card-item {
+    background: var(--pure-white);
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 122, 193, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 122, 193, 0.1);
+}
+
+.card-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 122, 193, 0.15);
+    border-color: rgba(0, 122, 193, 0.3);
+}
+
+.card-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.card-item h3 {
+    color: var(--evian-blue);
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.card-item p {
+    color: var(--mountain-gray);
+    line-height: 1.6;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* 太行山高清图片展示 */
+.taihang-mountain {
+    background: var(--pure-white);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 30px rgba(0, 122, 193, 0.1);
+    margin-bottom: 3rem;
+}
+
+.mountain-image {
+    background: linear-gradient(135deg, #e8f5e8 0%, #d4f1d4 100%);
+    padding: 4rem 2rem;
+    text-align: center;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-placeholder-large {
+    text-align: center;
+}
+
+.placeholder-icon-large {
+    font-size: 6rem;
+    margin-bottom: 1.5rem;
+    color: #228B22;
+    opacity: 0.8;
+}
+
+.image-placeholder-large p {
+    color: #228B22;
+    font-weight: 600;
+    font-size: 1.8rem;
     margin-bottom: 0.5rem;
+}
+
+.image-placeholder-large small {
+    color: var(--mountain-gray);
+    font-size: 1rem;
+}
+
+.mountain-description {
+    padding: 3rem 2rem;
+    text-align: center;
+    background: var(--snow-white);
+}
+
+.mountain-description h3 {
+    color: var(--evian-blue);
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.mountain-description p {
+    color: var(--mountain-gray);
+    line-height: 1.7;
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 图片区域 - 统一布局 */
+.source-images {
+    background: var(--snow-white);
+    padding: 3rem;
+    border-radius: 16px;
+    box-shadow: 0 6px 30px rgba(0, 122, 193, 0.1);
+    width: 100%;
+    max-width: 1400px;
+}
+
+.images-title {
+    color: var(--evian-blue);
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.images-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    justify-items: center;
+}
+
+.image-item {
+    background: var(--pure-white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 122, 193, 0.1);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 122, 193, 0.1);
+    width: 100%;
+    max-width: 250px;
+}
+
+.image-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 35px rgba(0, 122, 193, 0.15);
+}
+
+.image-placeholder {
+    padding: 2.5rem 2rem;
+    text-align: center;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.placeholder-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+}
+
+.image-placeholder p {
+    color: var(--evian-blue);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.image-placeholder small {
+    color: var(--mountain-gray);
+    font-size: 0.85rem;
+}
+
+.market-coverage {
+    background: var(--pure-white);
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 122, 193, 0.1);
+    border: 1px solid rgba(0, 122, 193, 0.1);
+    height: fit-content;
+}
+
+.market-coverage h4 {
+    color: var(--evian-blue);
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .market-tags {
@@ -1520,6 +3283,7 @@ img {
     flex-wrap: wrap;
     gap: 0.8rem;
     margin-top: 1rem;
+    justify-content: center;
 }
 
 .market-tag {
@@ -1665,13 +3429,13 @@ img {
     padding: 2.5rem 3rem;
     background: var(--snow-white);
     border-radius: 18px;
-    box-shadow: 0 8px 25px rgba(0, 119, 182, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 122, 193, 0.1);
     width: 100%;
     max-width: 900px;
 }
 
 .handbook-section:hover {
-    box-shadow: 0 15px 40px rgba(0, 119, 182, 0.15);
+    box-shadow: 0 15px 40px rgba(0, 122, 193, 0.15);
 }
 
 .handbook-section h3 {
@@ -1753,7 +3517,7 @@ img {
 }
 
 .condition-list li::before {
-    content: "✓";
+    content: "鉁?;
     position: absolute;
     left: 0;
     color: var(--evian-blue);
@@ -1928,7 +3692,7 @@ img {
         margin-top: 0; /* 移除额外的margin */
     }
     
-    /* 小屏幕导航栏高度调整 */
+    /* 灏忓睆骞曞鑸爮楂樺害璋冩暣 */
     .nav-container {
         padding: 0.6rem 0.8rem;
     }
@@ -2160,6 +3924,50 @@ img {
         gap: 1.5rem;
     }
     
+    /* 核心水源与产品特质移动端优化 */
+    .source-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .source-left,
+    .source-right {
+        gap: 1.5rem;
+    }
+    
+    .feature-cards {
+        gap: 1rem;
+    }
+    
+    .feature-card {
+        padding: 1.5rem;
+    }
+    
+    .feature-card .feature-icon {
+        font-size: 2.5rem;
+    }
+    
+    .feature-card h3 {
+        font-size: 1.2rem;
+    }
+    
+    .feature-card p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+    
+    .water-visual {
+        padding: 2rem 1.5rem;
+    }
+    
+    .visual-icon {
+        font-size: 3rem;
+    }
+    
+    .visual-text {
+        font-size: 1.1rem;
+    }
+    
     .production-content {
         grid-template-columns: 1fr;
         gap: 2rem;
@@ -2176,7 +3984,17 @@ img {
     
     .quality-content {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1.5rem;
+        max-width: 100%;
+        padding: 0 1rem;
+    }
+    
+    .quality-text {
+        padding-right: 0;
+    }
+    
+    .quality-image img {
+        max-width: 300px;
     }
     
     .vision-cards {
@@ -2197,6 +4015,104 @@ img {
 .join-content {
     padding: 80px 0;
     background: var(--snow-white);
+}
+
+/* 公司招聘用人理念样式 */
+.company-philosophy {
+    background: var(--pure-white);
+    border-radius: 15px;
+    box-shadow: var(--shadow-medium);
+    margin-bottom: 3rem;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.company-philosophy:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-heavy);
+}
+
+.philosophy-header {
+    background: var(--gradient-blue);
+    color: white;
+    padding: 2.5rem 2rem;
+    text-align: center;
+}
+
+.philosophy-header h2 {
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.philosophy-subtitle {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    font-weight: 300;
+    line-height: 1.6;
+}
+
+.philosophy-content {
+    padding: 2.5rem;
+}
+
+.philosophy-content > p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--mountain-gray);
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 500;
+}
+
+.philosophy-points {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.philosophy-item {
+    background: rgba(240, 248, 255, 0.5);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border-left: 4px solid var(--evian-blue);
+    transition: all 0.3s ease;
+}
+
+.philosophy-item:hover {
+    background: rgba(240, 248, 255, 0.8);
+    transform: translateX(5px);
+}
+
+.philosophy-item h3 {
+    color: var(--evian-dark-blue);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.philosophy-item p {
+    color: var(--mountain-gray);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+.philosophy-conclusion {
+    background: linear-gradient(135deg, rgba(0, 122, 193, 0.05), rgba(72, 202, 228, 0.05));
+    border-radius: 12px;
+    padding: 2rem;
+    margin-top: 2rem;
+    text-align: center;
+    border: 1px solid rgba(0, 122, 193, 0.1);
+}
+
+.philosophy-conclusion p {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--evian-dark-blue);
+    line-height: 1.7;
+    font-style: italic;
 }
 
 .job-section {
@@ -2294,7 +4210,7 @@ img {
 }
 
 .job-description li::before {
-    content: "•";
+    content: "鈥?;
     color: var(--evian-blue);
     font-weight: bold;
     position: absolute;
@@ -2449,6 +4365,23 @@ img {
     overflow: hidden;
 }
 
+.health-intro {
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.health-intro .intro-highlight {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: var(--evian-dark-blue);
+    background: linear-gradient(135deg, rgba(0, 122, 193, 0.08), rgba(74, 184, 232, 0.03));
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--evian-blue);
+    margin: 0 auto;
+    max-width: 900px;
+}
+
 .health-header {
     display: flex;
     justify-content: space-between;
@@ -2456,6 +4389,11 @@ img {
     margin-bottom: 2rem;
     padding-bottom: 1.5rem;
     border-bottom: 3px solid var(--glacier-blue);
+}
+
+.health-header h2 strong {
+    color: var(--evian-blue);
+    font-weight: 700;
 }
 
 .health-header h2 {
@@ -2492,11 +4430,36 @@ img {
     border-radius: 10px;
     border: 2px solid var(--glacier-blue);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.health-item.premium {
+    border-color: var(--evian-blue);
+    background: linear-gradient(135deg, var(--pure-white) 0%, #f0f9ff 100%);
+    box-shadow: 0 4px 20px rgba(0, 122, 193, 0.1);
+}
+
+.health-item.standard {
+    border-color: var(--light-gray);
+    background: linear-gradient(135deg, var(--pure-white) 0%, #f8f9fa 100%);
 }
 
 .health-item:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-heavy);
+}
+
+.item-subtitle {
+    color: var(--mountain-gray);
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.health-item ul li strong {
+    color: var(--evian-blue);
+    font-weight: 600;
 }
 
 .health-icon {
@@ -2544,7 +4507,7 @@ img {
 }
 
 .health-item li::before {
-    content: "✓";
+    content: "鉁?;
     color: var(--evian-blue);
     font-weight: bold;
     position: absolute;
@@ -2669,7 +4632,7 @@ img {
         line-height: 1.6;
     }
 
-/* 八缚岭水源地图片展示样式 */
+/* 雪顶山矿泉水源地图片展示样式 */
 .source-gallery {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -2685,9 +4648,7 @@ img {
     transition: transform 0.3s ease;
 }
 
-.gallery-item:hover {
-    transform: translateY(-5px);
-}
+/* 删除图片悬停上移效果 */
 
 .gallery-img {
     width: 100%;
@@ -2711,7 +4672,7 @@ img {
     font-size: 0.95rem;
 }
 
-/* 富锶低氘矿泉水样式 */
+/* 富锶低尘矿泉水样张 */
 .strontium-content {
     margin-top: 2rem;
 }
@@ -2937,7 +4898,7 @@ img {
         gap: 1.5rem;
     }
     
-    /* 八缚岭水源地移动端优化 */
+    /* 雪顶山矿泉水源地移动端优化 */
     .source-gallery {
         grid-template-columns: 1fr;
         gap: 1.5rem;
@@ -3025,3 +4986,330 @@ img {
         padding: 1rem;
     }
 }
+
+/* ==================== 水源地页面布局优化 ==================== */
+
+/* 水源地主布局容器 */
+.source-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 3rem;
+    align-items: start;
+}
+
+/* 左侧主内容区域 */
+.source-main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* 生态环境卡片优化 */
+.ecology-card {
+    background: linear-gradient(135deg, var(--pure-white) 0%, #f0f9ff 100%);
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(34, 139, 34, 0.15);
+    border: 2px solid rgba(34, 139, 34, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.ecology-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #228B22, #32CD32);
+}
+
+.ecology-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 50px rgba(34, 139, 34, 0.25);
+    border-color: rgba(34, 139, 34, 0.3);
+}
+
+.ecology-card .card-icon {
+    font-size: 4.5rem;
+    margin-bottom: 1.5rem;
+    color: #228B22;
+    text-shadow: 0 4px 8px rgba(34, 139, 34, 0.2);
+}
+
+.ecology-card h3 {
+    color: #228B22;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.ecology-card p {
+    color: var(--mountain-gray);
+    line-height: 1.8;
+    font-size: 1.15rem;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+}
+
+.ecology-features {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: linear-gradient(135deg, rgba(34, 139, 34, 0.1), rgba(50, 205, 50, 0.05));
+    padding: 1rem 1.5rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #228B22;
+    border: 1px solid rgba(34, 139, 34, 0.2);
+    transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+    background: linear-gradient(135deg, rgba(34, 139, 34, 0.15), rgba(50, 205, 50, 0.1));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(34, 139, 34, 0.15);
+}
+
+.feature-icon {
+    font-size: 1.4rem;
+}
+
+/* 右侧图片展示区域 */
+.source-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.image-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.source-gallery-item {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    transition: all 0.4s ease;
+}
+
+.source-gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+.gallery-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+/* 彻底禁用所有图片悬停效果 */
+.gallery-item:hover .image-caption,
+.gallery-image:hover + .image-caption,
+.gallery-item:hover + .image-caption {
+    display: none !important;
+}
+
+.image-caption {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    color: var(--mountain-gray);
+    font-style: italic;
+    line-height: 1.4;
+    text-align: center;
+}
+
+/* 水质特点区域优化 */
+.quality-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+    margin-top: 3rem;
+}
+
+.feature-row {
+    display: contents;
+}
+
+.feature {
+    background: var(--pure-white);
+    padding: 2.5rem;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0, 122, 193, 0.12);
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(0, 122, 193, 0.08);
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 122, 193, 0.2);
+    border-color: rgba(0, 122, 193, 0.2);
+}
+
+.feature-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.feature h3 {
+    color: var(--evian-blue);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.feature p {
+    color: var(--mountain-gray);
+    line-height: 1.7;
+    font-size: 1.05rem;
+}
+
+/* 水源保护区域优化 */
+.protection-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+    margin-top: 3rem;
+}
+
+.protection-row {
+    display: contents;
+}
+
+.protection-item {
+    background: var(--pure-white);
+    padding: 2.5rem;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0, 122, 193, 0.12);
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(0, 122, 193, 0.08);
+}
+
+.protection-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 122, 193, 0.2);
+    border-color: rgba(0, 122, 193, 0.2);
+}
+
+.protection-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.protection-item h3 {
+    color: var(--evian-blue);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.protection-item p {
+    color: var(--mountain-gray);
+    line-height: 1.7;
+    font-size: 1.05rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+    .source-layout {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+    
+    .source-sidebar {
+        order: -1;
+    }
+    
+    .gallery-image {
+        height: 250px;
+    }
+}
+
+@media (max-width: 768px) {
+    .quality-features,
+    .protection-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .ecology-card {
+        padding: 2rem;
+    }
+    
+    .ecology-card h3 {
+        font-size: 1.7rem;
+    }
+    
+    .ecology-card p {
+        font-size: 1.05rem;
+    }
+    
+    .feature,
+    .protection-item {
+        padding: 2rem;
+    }
+    
+    .feature-icon,
+    .protection-icon {
+        font-size: 3rem;
+    }
+    
+    .gallery-image {
+        height: 200px;
+    }
+    
+    .image-caption {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .ecology-features {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .feature-item {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .gallery-image {
+        height: 180px;
+    }
+    
+    .ecology-card {
+        padding: 1.5rem;
+    }
+    
+    .feature,
+    .protection-item {
+        padding: 1.5rem;
+    }
+}
+
+/* 文件结束 */

@@ -14,40 +14,38 @@
 <body>
     <!-- 头部导航 -->
     <header class="header">
-        <div class="nav-container">
-            <div class="logo">
-                <a href="index.html">
-                    <img src="./images/logo.jpg" alt="雪顶山矿泉®" class="logo-image">
-                </a>
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="./images/logo.jpg" alt="雪顶山矿泉®" class="logo-image" loading="lazy">
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="about.html">品牌故事</a></li>
+                    <li><a href="products.html">产品系列</a></li>
+                    <li><a href="source.html">水源地</a></li>
+                    <li><a href="health.html" class="active">健康饮水</a></li>
+                    <li><a href="contact.html">合作加盟</a></li>
+                    <li><a href="join.html">招聘信息</a></li>
+                </ul>
+                <div class="nav-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </div>
-            
-            <nav class="nav-menu">
-                <li><a href="index.html">首页</a></li>
-                <li><a href="about.html">关于我们</a></li>
-                <li><a href="#products">产品展示</a></li>
-                <li class="has-submenu">
-                    <a href="contact.html">联系我们</a>
-                    <ul class="submenu">
-                        <li><a href="contact.html">招商加盟</a></li>
-                        <li><a href="join.html">招聘信息</a></li>
-                    </ul>
-                </li>
-                <li><a href="health.html" class="active">健康饮水</a></li>
-            </nav>
-            
-            <div class="nav-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
+        </nav>
     </header>
 
     <!-- 页面英雄区域 -->
     <section class="page-hero">
-        <div class="page-hero-content">
-            <h1 class="page-title">健康饮水</h1>
-            <p class="page-subtitle">让正确喝水成为每个人的健康习惯</p>
+        <div class="container">
+            <div class="page-hero-content">
+                <h1 class="page-title">健康饮水</h1>
+                <p class="page-subtitle">让正确喝水成为每个人的健康习惯</p>
+            </div>
         </div>
     </section>
 
@@ -57,39 +55,45 @@
             <!-- 富锶天然泉水与天然水区别 -->
             <div class="health-section">
                 <div class="health-header">
-                    <h2>雪顶山是富锶天然泉水，不是天然水</h2>
+                    <h2>雪顶山是<strong>富锶天然泉水</strong>，不是普通天然水</h2>
                     <div class="health-badge">
                         <i class="fas fa-leaf"></i>
-                        <span>富锶天然泉水</span>
+                        <span>富锶天然泉水专业品牌</span>
                     </div>
                 </div>
                 
+                <div class="health-intro">
+                    <p class="intro-highlight">雪顶山矿泉是源自太行山脉八缚岭自然保护区的<strong>富锶天然泉水</strong>，与普通天然水有着本质区别。我们致力于为消费者提供真正有益健康的<strong>富锶低氘天然泉水</strong>产品。</p>
+                </div>
+                
                 <div class="health-grid">
-                    <div class="health-item">
+                    <div class="health-item premium">
                         <div class="health-icon">
                             <i class="fas fa-mountain"></i>
                         </div>
                         <h3>富锶天然泉水</h3>
-                        <p>采自地下深层岩石裂隙中，雪顶山的水源深藏于人迹罕至的深山里面，从地下数百米的岩石裂隙中抽取，且取水点附近都为群山野岭，远离城市工业污染。</p>
+                        <p class="item-subtitle">源自八缚岭自然保护区深层岩层</p>
+                        <p>雪顶山<strong>富锶天然泉水</strong>采自地下数百米深层岩石裂隙，水源深藏于人迹罕至的深山秘境，远离城市工业污染，经过深层岩层自然过滤净化。</p>
                         <ul>
-                            <li>源自八缚岭自然保护区深层岩层</li>
-                            <li>富含钙、镁、钾、钠等天然矿物质</li>
-                            <li>经过深层岩层自然过滤净化</li>
-                            <li>符合国家《GB8537 饮用富锶天然泉水》标准</li>
+                            <li><strong>锶含量</strong>：0.8-4.0mg/L，符合国家标准</li>
+                            <li><strong>水源地</strong>：八缚岭自然保护区，海拔1800米以上</li>
+                            <li><strong>矿物质</strong>：富含钙、镁、钾、钠等天然矿物质</li>
+                            <li><strong>认证标准</strong>：符合《GB8537 饮用富锶天然泉水》标准</li>
                         </ul>
                     </div>
                     
-                    <div class="health-item">
+                    <div class="health-item standard">
                         <div class="health-icon">
                             <i class="fas fa-tint"></i>
                         </div>
-                        <h3>天然水</h3>
-                        <p>通常取水来自水库水、湖泊水等地表水，水源易被酸雨、农药、化肥、动物粪便、树叶腐烂等多方面污染。</p>
+                        <h3>普通天然水</h3>
+                        <p class="item-subtitle">通常来自地表水源</p>
+                        <p>普通天然水通常取水来自水库水、湖泊水等地表水，水源易受环境污染影响，矿物质含量不稳定，需要人工净化处理。</p>
                         <ul>
-                            <li>来自地表水源</li>
-                            <li>易受环境污染影响</li>
-                            <li>矿物质含量不稳定</li>
-                            <li>需要人工净化处理</li>
+                            <li><strong>水源类型</strong>：地表水源，易受污染</li>
+                            <li><strong>矿物质</strong>：含量不稳定，缺乏锶元素</li>
+                            <li><strong>处理方式</strong>：需要人工净化处理</li>
+                            <li><strong>健康价值</strong>：缺乏特定保健功能</li>
                         </ul>
                     </div>
                 </div>
@@ -377,25 +381,45 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-nav">
-                    <a href="index.html">首页</a>
-                    <a href="about.html">关于我们</a>
-                    <a href="index.html#products">产品展示</a>
-                    <a href="contact.html">联系我们</a>
-                    <a href="health.html">健康饮水</a>
+                <div class="footer-brand">
+                    <img src="./images/logo.jpg" alt="雪顶山矿泉" class="footer-logo">
+                    <p class="brand-slogan">雪顶山矿泉® - 源自太行山脉八缚岭自然保护区的纯净之水</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-weixin"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-weibo"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-tiktok"></i></a>
+                    </div>
                 </div>
                 <div class="footer-contact">
-                    <p class="service-hotline">全国服务专线 400-605-5365</p>
-                    <div class="wechat-qr">
-                        <p class="follow-us">关注雪顶山矿泉微信公众号</p>
-                        <div class="qr-code">
-                            <img src="./images/wechat-qr.jpg" alt="雪顶山微信公众号" class="qr-image" loading="lazy">
+                    <h4>联系我们</h4>
+                    <div class="contact-info">
+                        <div class="contact-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>山西省晋中市和顺县横岭镇上北舍村</span>
+                        </div>
+                        <div class="contact-detail">
+                            <i class="fas fa-phone"></i>
+                            <span>全国服务专线：400-605-5365</span>
+                        </div>
+                        <div class="contact-detail">
+                            <i class="fas fa-envelope"></i>
+                            <span>xuedingshankq@163.com</span>
                         </div>
                     </div>
                 </div>
+                <div class="footer-wechat">
+                    <h4>关注我们</h4>
+                    <img src="./images/wechat-qr.jpg" alt="雪顶山微信公众号" class="qr-image" loading="lazy">
+                    <p class="qr-desc">扫码关注微信公众号<br>获取最新资讯</p>
+                </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 雪顶山矿泉水有限公司. 保留所有权利.</p>
+                <p>&copy; 2026 雪顶山矿泉水有限公司 版权所有 | 晋ICP备2024080000号</p>
+                <div class="footer-links">
+                    <a href="#">隐私政策</a>
+                    <a href="#">使用条款</a>
+                    <a href="#">网站地图</a>
+                </div>
             </div>
         </div>
     </footer>

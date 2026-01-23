@@ -2,65 +2,78 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const app = express();
-const PORT = 3001;
+const PORT = 3000;
 
 // 中间件
 app.use(express.json());
+app.use(express.static('.'));
 
-// 用于存储网站配置的文件
-const configFilePath = path.join(__dirname, 'website-config.json');
-
-// API路由 - 必须在静态文件中间件之前定义
-// 获取网站配置
-app.get('/api/config', (req, res) => {
+// 读取留言数据
+function getMessages() {
     try {
-        if (fs.existsSync(configFilePath)) {
-            const config = JSON.parse(fs.readFileSync(configFilePath, 'utf8'));
-            res.json(config);
-        } else {
-            // 返回默认配置
-            res.json({});
-        }
+        const data = fs.readFileSync('messages.json', 'utf8');
+        return JSON.parse(data);
     } catch (error) {
-        res.status(500).json({ error: '读取配置失败' });
+        return [];
     }
+}
+
+// 保存留言数据
+function saveMessages(messages) {
+    fs.writeFileSync('messages.json', JSON.stringify(messages, null, 2));
+}
+
+// 提交留言API
+app.post('/api/message', (req, res) => {
+    const { name, phone, message } = req.body;
+    
+    if (!name || !phone || !message) {
+        return res.status(400).json({ error: '请填写所有字段' });
+    }
+    
+    const newMessage = {
+        id: Date.now(),
+        name,
+        phone,
+        message,
+        timestamp: new Date().toLocaleString('zh-CN'),
+        status: '未处理'
+    };
+    
+    const messages = getMessages();
+    messages.unshift(newMessage);
+    saveMessages(messages);
+    
+    res.json({ success: true, message: '留言提交成功' });
 });
 
-// 保存网站配置
-app.post('/api/config', (req, res) => {
-    try {
-        const config = req.body;
-        fs.writeFileSync(configFilePath, JSON.stringify(config, null, 2), 'utf8');
-        res.json({ success: true, message: '配置保存成功' });
-    } catch (error) {
-        res.status(500).json({ error: '保存配置失败' });
-    }
+// 获取留言列表API
+app.get('/api/messages', (req, res) => {
+    const messages = getMessages();
+    res.json(messages);
 });
 
-// 提供管理后台页面
+// 更新留言状态API
+app.put('/api/message/:id', (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+    
+    const messages = getMessages();
+    const messageIndex = messages.findIndex(msg => msg.id == id);
+    
+    if (messageIndex === -1) {
+        return res.status(404).json({ error: '留言不存在' });
+    }
+    
+    messages[messageIndex].status = status;
+    saveMessages(messages);
+    
+    res.json({ success: true });
+});
+
+// 管理后台页面
 app.get('/admin', (req, res) => {
-    res.sendFile(path.join(__dirname, 'admin-wysiwyg.html'));
-});
-
-// 处理 favicon 请求
-app.get('/favicon.ico', (req, res) => {
-    res.status(204).end(); // No content
-});
-
-// 静态文件服务 - 先排除特定的API路径
-app.use((req, res, next) => {
-    if (req.path.startsWith('/api/')) {
-        // 如果是API路径，跳过静态文件服务
-        next();
-    } else {
-        // 否则使用静态文件服务
-        express.static(path.join(__dirname, '/'))(req, res, next);
-    }
-});
-
-// 根路径重定向到主页
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'admin.html'));
 });
 
 app.listen(PORT, () => {
